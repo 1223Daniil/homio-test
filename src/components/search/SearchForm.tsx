@@ -73,22 +73,25 @@ export function SearchForm({
   const searchParams = useNextSearchParams();
 
   // Move DEFAULT_VALUES inside component to access filterData
-  const DEFAULT_VALUES = {
-    searchType: "units" as const,
-    propertyType: "",
-    bedrooms: "",
-    bathrooms: "",
-    priceRange: [
-      filterData.prices.min || 0,
-      filterData.prices.max || 100000000
-    ] as [number, number],
-    area: [0, 1000] as [number, number],
-    searchQuery: "",
-    completion: "",
-    features: new Set<string>(),
-    amenities: new Set<string>(),
-    showMap: false
-  };
+  const DEFAULT_VALUES = useMemo(
+    () => ({
+      searchType: "units" as const,
+      propertyType: "",
+      bedrooms: "",
+      bathrooms: "",
+      priceRange: [
+        filterData.prices.min || 0,
+        filterData.prices.max || 100000000
+      ] as [number, number],
+      area: [0, 1000] as [number, number],
+      searchQuery: "",
+      completion: "",
+      features: new Set<string>(),
+      amenities: new Set<string>(),
+      showMap: false
+    }),
+    [filterData]
+  );
 
   const { bedrooms: bedroomsData, prices: pricesRange } = filterData;
   const bedroomsRange = Array.from(
@@ -124,15 +127,6 @@ export function SearchForm({
   const initialPriceMax =
     Number(searchParams.get("priceMax")) || filterData.prices.max || 100000000;
 
-  // Add logging for debugging
-  console.log("=== SearchForm Price Range Debug ===", {
-    filterDataPrices: filterData.prices,
-    initialPriceMin,
-    initialPriceMax,
-    searchParamPriceMin: searchParams.get("priceMin"),
-    searchParamPriceMax: searchParams.get("priceMax")
-  });
-
   const [priceRange, setPriceRange] = useState<[number, number]>([
     initialPriceMin,
     initialPriceMax
@@ -152,34 +146,6 @@ export function SearchForm({
       }
     }
   }, [filterData.prices, searchParams]);
-
-  // Add logging for initial values
-  console.log("=== Initial Price Range Values ===", {
-    urlPriceMin: searchParams.get("priceMin"),
-    urlPriceMax: searchParams.get("priceMax"),
-    filterDataMin: filterData.prices.min,
-    filterDataMax: filterData.prices.max,
-    initialPriceMin,
-    initialPriceMax
-  });
-
-  // Add logging for DEFAULT_VALUES
-  console.log("=== DEFAULT_VALUES Debug ===", {
-    defaultPriceRange: DEFAULT_VALUES.priceRange,
-    filterData: { prices: filterData.prices }
-  });
-
-  // Add logging for price range state changes
-  useEffect(() => {
-    console.log("=== Price Range State Update ===", {
-      currentPriceRange: priceRange,
-      urlParams: {
-        priceMin: searchParams.get("priceMin"),
-        priceMax: searchParams.get("priceMax")
-      },
-      filterData: { min: filterData.prices.min, max: filterData.prices.max }
-    });
-  }, [priceRange, searchParams, filterData.prices]);
 
   const [area, setArea] = useState<[number, number]>([
     Number(searchParams.get("areaMin")) || DEFAULT_VALUES.area[0],
@@ -331,29 +297,8 @@ export function SearchForm({
 
   const handleSearch = useCallback((): void => {
     // Add logging before search
-    console.log("=== Search Debug ===", {
-      currentPriceRange: priceRange,
-      searchParams: {
-        priceMin: searchParams.get("priceMin"),
-        priceMax: searchParams.get("priceMax")
-      }
-    });
 
     const params = new URLSearchParams();
-
-    console.log("=== Filter State Debug ===");
-    console.log("Current Filter Values:", {
-      searchType,
-      propertyType,
-      bedrooms,
-      bathrooms,
-      priceRange,
-      area,
-      searchQuery,
-      completion,
-      features: Array.from(features),
-      amenities: Array.from(amenities)
-    });
 
     // Basic search parameters
     params.set("type", searchType);
@@ -374,11 +319,6 @@ export function SearchForm({
       params.set("amenities", Array.from(amenities).join(","));
     if (searchQuery) params.set("q", searchQuery);
     if (showMap) params.set("view", "map");
-
-    console.log(
-      "Generated URL Parameters:",
-      Object.fromEntries(params.entries())
-    );
 
     // Clear any previous ID-based filters
     const currentParams = new URLSearchParams(window.location.search);

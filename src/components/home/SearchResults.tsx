@@ -54,12 +54,6 @@ export function SearchResults({
   // Мемозируем маркеры, если нужна дополнительная логика
   const memoMarkers = useMemo(() => mapMarkers, [mapMarkers]);
 
-  // Если проектов много, можно сначала ограничить отображение, а потом виртуализировать
-  // Например:
-  // const DISPLAY_LIMIT = 100;
-  // const visibleProjects = projects.slice(0, DISPLAY_LIMIT);
-  // Но вместо отсечения лучше использовать react-window при > порога.
-
   return (
     <div
       className={cn(
