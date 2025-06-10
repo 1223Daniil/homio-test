@@ -1,0 +1,131 @@
+.header {
+  @apply flex items-center text-xs leading-[18px] text-[#535862] font-medium bg-[#F5F5F5] rounded-lg h-[44px];
+}
+
+.headerColumn {
+  @apply px-4;
+}
+
+.unit {
+  @apply min-w-[86px] max-w-[86px] 2xl:min-w-[100px] 2xl:max-w-[100px];
+}
+
+.layout {
+  @apply min-w-[92px] max-w-[92px];
+}
+
+.price {
+  @apply min-w-[100px] max-w-[100px];
+}
+
+.beds {
+  @apply min-w-[71px] max-w-[71px];
+}
+
+.baths {
+  @apply min-w-[75px] max-w-[75px];
+}
+
+.area {
+  @apply min-w-[69px] max-w-[69px];
+}
+
+.floor {
+  @apply min-w-[52px] max-w-[52px];
+}
+
+.view {
+  @apply min-w-[99px] max-w-[99px];
+}
+
+.actions {
+  @apply w-[154px] flex items-center pr-3 flex-1;
+}
+
+.markAction {
+  @apply w-fit;
+}
+
+.viewAction {
+  @apply min-w-[80px] 2xl:min-w-[90px];
+}
+
+.row {
+  @apply relative rounded-lg border border-[#D5D7DA] h-[104px] flex items-center overflow-hidden;
+}
+
+.statusAvailable::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#12B76A];
+}
+
+.statusReserved::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#FFA800];
+}
+
+.statusSold::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#717680];
+}
+
+.statusUnavailable::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#D5D7DA];
+}
+
+.unitBeds,
+.unitBaths,
+.unitArea,
+.unitFloor,
+.unitView {
+  @apply justify-center;
+}
+
+.data {
+  @apply flex flex-col gap-y-3 mt-3;
+}
+
+.rowColumn {
+  @apply px-1;
+}
+
+.unitNumber {
+  @apply pl-4 pr-1 !text-xs;
+}
+
+.rowColumn {
+  @apply border-r border-[#d5d7da13] h-full flex items-center break-all;
+}
+
+.number,
+.unitPrice {
+  @apply text-sm leading-5 text-[#181D27] font-medium;
+}
+
+.layoutName,
+.unitBeds,
+.unitBaths,
+.unitArea {
+  @apply text-sm leading-5 text-[#717680] font-normal;
+}
+
+.unitFloor {
+  @apply text-sm leading-5 text-[#3062B8] font-semibold;
+}
+
+.markAction {
+  @apply mx-auto;
+}
+
+.viewAction {
+  @apply text-xs 2xl:text-sm leading-5 text-white w-[50px] h-[30px] 2xl:w-[66px] 2xl:h-[40px] flex items-center justify-center bg-[#3062B8] rounded-lg font-semibold mx-auto;
+}
+
+.paginationWrapper {
+  @apply mx-auto mt-[28px];
+}
+
+.paginationItem {
+  @apply h-[40px] px-[6px] min-w-[40px] rounded-[4px] flex items-center justify-center text-sm leading-5 text-[#717680] font-semibold;
+}
+
+.paginationCursor {
+  @apply bg-[#F5F8FF] text-[#416DC6] font-medium;
+}

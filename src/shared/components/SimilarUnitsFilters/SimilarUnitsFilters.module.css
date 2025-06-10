@@ -1,0 +1,11 @@
+.similarUnitsFilters {
+  @apply flex gap-3 w-full;
+}
+
+.col {
+  @apply flex flex-col gap-3;
+}
+
+.col select {
+  @apply w-full bg-white border border-[#D5D7DA] flex-1;
+}

@@ -1,0 +1,3 @@
+.heroContent {
+  @apply aspect-video w-full relative hidden md:block;
+}

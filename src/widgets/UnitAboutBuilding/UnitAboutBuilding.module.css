@@ -1,0 +1,39 @@
+.unitAboutBuilding {
+  @apply mt-12;
+}
+
+.title {
+  @apply text-[30px] leading-[38px] font-semibold light:text-gray-900 dark:text-white;
+}
+
+.container {
+  @apply flex flex-col md:flex-row mt-4 md:mt-6 gap-3 md:gap-6;
+}
+
+.buildingImage {
+  @apply relative w-[82.9vw] h-[55.73vw] md:w-[444px] md:h-[280px] rounded-lg overflow-hidden;
+}
+
+.buildingInfo {
+  @apply flex flex-col flex-1;
+}
+
+.infoLine {
+  @apply py-2 flex justify-between border-b border-[#E9EAEB];
+}
+
+.infoLine * {
+  @apply flex-1 text-left text-base leading-6 text-gray-500;
+}
+
+.infoLine a {
+  @apply font-semibold text-[#3062B8];
+}
+
+.infoLine:first-child {
+  @apply text-base leading-6 text-gray-600;
+}
+
+.value {
+  @apply text-base leading-6 text-gray-600 font-semibold;
+}

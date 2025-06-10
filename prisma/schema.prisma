@@ -1,0 +1,1622 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  log             = []
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        UserRole @unique
+  permissions Json     @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       User[]
+}
+
+model User {
+  id                String             @id @default(cuid())
+  email             String             @unique
+  username          String             @unique
+  password          String
+  name              String?
+  roleId            String
+  developerId       String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  phone             String?
+  avatar            String?
+  client            Client?
+  favorites         Favorite[]
+  logs              Log[]
+  moderations       Moderation[]
+  notifications     Notification[]
+  transactions      Transaction[]
+  fieldMappings     UnitFieldMapping[]
+  agent             Agent?
+  lessonCompletions LessonCompletion[]
+  quizAttempts      QuizAttempt[]
+  achievements      UserAchievement[]
+  courseProgress    UserProgress[]
+  developer         Developer?         @relation(fields: [developerId], references: [id])
+  role              Role               @relation(fields: [roleId], references: [id])
+
+  @@index([email])
+  @@index([roleId])
+  @@index([developerId])
+  @@map("users")
+}
+
+model Developer {
+  id                String                 @id @default(cuid())
+  logo              String?
+  banner            String?
+  website           String?
+  contactEmail      String?
+  contactPhone      String?
+  address           String?
+  establishedYear   Int?
+  completedUnits    Int?
+  completedProjects Int?
+  ongoingUnits      Int?
+  ongoingProjects   Int?
+  deliveryRate      Int?
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  translations      DeveloperTranslation[]
+  projects          Project[]
+  properties        Property[]
+  events            UpcomingEvent[]
+  courses           Course[]
+  users             User[]
+
+  @@map("developers")
+}
+
+model DeveloperTranslation {
+  id          String    @id @default(cuid())
+  developerId String
+  language    String
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  developer   Developer @relation(fields: [developerId], references: [id], onDelete: Cascade)
+
+  @@unique([developerId, language])
+  @@index([language])
+}
+
+model Agency {
+  id           String     @id @default(cuid())
+  name         String
+  description  String?
+  address      String?
+  contactEmail String?
+  contactPhone String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  properties   Property[]
+  agents       Agent[]
+}
+
+model Agent {
+  id           String             @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String             @unique
+  phone        String?
+  agencyId     String
+  userId       String             @unique
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  properties   Property[]
+  transactions Transaction[]
+  agency       Agency             @relation(fields: [agencyId], references: [id])
+  user         User               @relation(fields: [userId], references: [id])
+  sessions     AnalyticsSession[]
+
+  @@index([agencyId])
+  @@map("agents")
+}
+
+model Client {
+  id           String        @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String        @unique
+  phone        String?
+  userId       String        @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+}
+
+model Project {
+  id                 String               @id @default(uuid())
+  name               String?
+  slug               String?              @unique
+  description        String?
+  type               ProjectType
+  buildingStatus     BuildingStatus       @default(PLANNING)
+  completionDate     DateTime?
+  constructionStatus Int?
+  status             ProjectStatus        @default(DRAFT)
+  phase              Int?                 @default(1)
+  class              ProjectClass         @default(STANDARD)
+  totalLandArea      Float?
+  infrastructureArea Float?
+  totalBuildings     Int?
+  totalUnits         Int?
+  locationId         String?              @unique
+  publicTransport    Int?
+  amenitiesLevel     Int?
+  climateConditions  Int?
+  beachAccess        Int?
+  rentalDemand       Int?
+  safetyLevel        Int?
+  noiseLevel         Int?
+  schoolsAvailable   Int?
+  masterPlan         String?
+  marketingAssets    String?
+  tour3d             String?
+  siteUrl            String?
+  purchaseConditions String?
+  specialOffers      Json?                @default("[]")
+  priceLinks         Json?                @default("[]")
+  ownership          String[]
+  promotions         Json?
+  furniturePackages  Json?
+  currency           String?              @default("USD")
+  developerId        String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  additionalExpenses AdditionalExpenses[]
+  agentCommissions   AgentCommission[]
+  buildings          Building[]
+  cashbackBonuses    CashbackBonus[]
+  masterPlanPoints   MasterPlanPoint[]
+  paymentPlans       PaymentPlan[]
+  paymentStages      PaymentStage[]
+  developer          Developer            @relation(fields: [developerId], references: [id])
+  location           Location?            @relation(fields: [locationId], references: [id])
+  amenities          ProjectAmenity[]
+  documents          ProjectDocument[]
+  embedding          ProjectEmbedding?
+  media              ProjectMedia[]
+  pricing            ProjectPricing?
+  translations       ProjectTranslation[]
+  videos             ProjectVideo[]
+  yield              ProjectYield?
+  propertyTypes      PropertyType[]
+  PurchaseConditions PurchaseConditions?
+  units              Unit[]
+  fieldMappings      UnitFieldMapping[]
+  imports            UnitImport[]
+  layouts            UnitLayout[]
+  chatMessages       ChatMessage[]        @relation("ChatMessageToProject")
+  collections        CuratedCollection[]  @relation("CollectionToProject")
+  viewedBy           UserContext[]        @relation("ProjectToUserContext")
+
+  @@index([developerId])
+  @@index([name])
+  @@index([description])
+}
+
+model ProjectTranslation {
+  id          String   @id @default(cuid())
+  projectId   String
+  language    String
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, language])
+  @@index([language])
+}
+
+model Unit {
+  id                 String                 @id @default(cuid())
+  projectId          String
+  buildingId         String
+  slug               String?                @unique
+  name               String?
+  number             String?
+  floor              Int
+  status             UnitStatus             @default(AVAILABLE)
+  translations       Json[]
+  area               Float?
+  bathrooms          Int                    @default(1)
+  bedrooms           Int                    @default(0)
+  price              Float
+  pricePerSqm        Float?
+  currencyId         String?
+  discountPrice      Float?
+  discountCurrencyId String?
+  priceHistory       Json?
+  view               String?
+  location           String?
+  coordinates        String?
+  description        String?
+  searchVector       Unsupported("vector")?
+  layoutId           String?
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
+  floorPlanId        String?
+  areas              FloorArea[]
+  transactions       Transaction[]
+  building           Building               @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  currency           Currency?              @relation(fields: [currencyId], references: [id])
+  discountCurrency   Currency?              @relation("UnitDiscountCurrency", fields: [discountCurrencyId], references: [id])
+  floorPlan          FloorPlan?             @relation(fields: [floorPlanId], references: [id])
+  layout             UnitLayout?            @relation(fields: [layoutId], references: [id])
+  project            Project                @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  features           UnitFeature[]
+  media              UnitMedia[]
+  versions           UnitVersion[]
+
+  @@index([projectId])
+  @@index([buildingId])
+  @@index([currencyId])
+  @@index([discountCurrencyId])
+  @@index([layoutId])
+  @@index([floorPlanId])
+}
+
+model UnitLayout {
+  id                    String                  @id @default(cuid())
+  projectId             String
+  name                  String
+  slug                  String?                 @unique
+  type                  UnitLayoutType
+  description           String?
+  status                UnitLayoutStatus        @default(DRAFT)
+  totalArea             Float
+  livingArea            Float?
+  balconyArea           Float?
+  ceilingHeight         Float?
+  bedrooms              Int
+  bathrooms             Int
+  windowCount           Int?
+  orientation           String?
+  energyClass           String?
+  mainImage             String?
+  mainImageBlurhash     String?
+  images                Json?
+  planImage             String?
+  tour3d                String?
+  features              Json?
+  furniture             Json?
+  finishes              Json?
+  floor                 Int?
+  order                 Int                     @default(0)
+  advantages            String[]
+  tags                  String[]
+  basePrice             Float?
+  currency              String                  @default("USD")
+  pricePerSqm           Float?
+  maintenanceFee        Float?
+  hasBalcony            Boolean                 @default(false)
+  hasParking            Boolean                 @default(false)
+  hasStorage            Boolean                 @default(false)
+  hasFurnished          Boolean                 @default(false)
+  hasSmartHome          Boolean                 @default(false)
+  hasSecuritySystem     Boolean                 @default(false)
+  hasAirConditioning    Boolean                 @default(false)
+  hasHeating            Boolean                 @default(false)
+  hasWaterHeating       Boolean                 @default(false)
+  hasGas                Boolean                 @default(false)
+  hasInternet           Boolean                 @default(false)
+  hasCableTV            Boolean                 @default(false)
+  hasElevator           Boolean                 @default(false)
+  hasWheelchairAccess   Boolean                 @default(false)
+  hasPets               Boolean                 @default(false)
+  seoTitle              String?
+  seoDescription        String?
+  seoKeywords           String[]
+  viewCount             Int                     @default(0)
+  popularity            Int                     @default(0)
+  searchVector          Unsupported("vector")?
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  units                 Unit[]
+  project               Project                 @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  UnitLayoutTranslation UnitLayoutTranslation[]
+
+  @@index([projectId])
+  @@index([slug])
+  @@index([type])
+  @@index([status])
+}
+
+model UnitLayoutTranslation {
+  id             String     @id @default(cuid())
+  unitLayoutId   String
+  language       String
+  name           String
+  description    String?
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String[]
+  tags           String[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  unitLayout     UnitLayout @relation(fields: [unitLayoutId], references: [id], onDelete: Cascade)
+
+  @@unique([unitLayoutId, language])
+  @@index([language])
+  @@index([unitLayoutId])
+}
+
+model Property {
+  id                   String                 @id @default(cuid())
+  title                String
+  description          String?
+  price                Float?
+  address              String?
+  developerId          String?
+  agencyId             String?
+  agentId              String?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  favorites            Favorite[]
+  agency               Agency?                @relation(fields: [agencyId], references: [id])
+  agent                Agent?                 @relation(fields: [agentId], references: [id])
+  developer            Developer?             @relation(fields: [developerId], references: [id])
+  PropertyToCollection PropertyToCollection[]
+  transactions         Transaction[]
+
+  @@index([developerId])
+  @@index([agencyId])
+  @@index([agentId])
+}
+
+model Transaction {
+  id          String            @id @default(cuid())
+  propertyId  String?
+  unitId      String?
+  projectId   String?
+  projectName String?
+  name        String?
+  phone       String?
+  buyerId     String?
+  agentId     String?
+  userId      String
+  status      TransactionStatus @default(NEW)
+  amount      Float?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  date        DateTime?
+  type        TransactionType
+  comments    Json[]            @default([])
+  agent       Agent?            @relation(fields: [agentId], references: [id])
+  buyer       Client?           @relation(fields: [buyerId], references: [id])
+  property    Property?         @relation(fields: [propertyId], references: [id])
+  unit        Unit?             @relation(fields: [unitId], references: [id])
+  user        User              @relation(fields: [userId], references: [id])
+
+  @@index([propertyId])
+  @@index([unitId])
+  @@index([buyerId])
+  @@index([agentId])
+  @@index([projectId])
+  @@index([userId])
+}
+
+model ProjectAmenity {
+  id        String   @id @default(uuid())
+  name      String?
+  category  String?
+  projectId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  amenityId String
+  amenity   Amenity  @relation(fields: [amenityId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([amenityId])
+}
+
+model PaymentPlan {
+  id           String   @id @default(cuid())
+  projectId    String
+  name         String
+  deposit      Float
+  installments Json
+  currencyId   String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  currency     Currency @relation(fields: [currencyId], references: [id])
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([currencyId])
+}
+
+model PropertyType {
+  id          String   @id @default(cuid())
+  projectId   String
+  name        String
+  area        Float
+  price       Float
+  currencyId  String
+  bedrooms    Int
+  bathrooms   Int
+  floorPlan   String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  currency    Currency @relation(fields: [currencyId], references: [id])
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([currencyId])
+}
+
+model ProjectMedia {
+  id           String        @id @default(cuid())
+  projectId    String
+  type         String
+  url          String
+  title        String?
+  description  String?
+  category     MediaCategory @default(BANNER)
+  order        Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  isCover      Boolean       @default(false)
+  isMainVideo  Boolean       @default(false)
+  metadata     Json?
+  thumbnailUrl String?
+  blurhash     String?
+  project      Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model Moderation {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  targetId  String
+  details   Json
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  details   Json
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  recipientId String
+  message     String
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  recipient   User     @relation(fields: [recipientId], references: [id])
+
+  @@index([recipientId])
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  propertyId String
+  createdAt  DateTime @default(now())
+  property   Property @relation(fields: [propertyId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, propertyId])
+  @@index([userId])
+  @@index([propertyId])
+}
+
+model Location {
+  id             String          @id @default(cuid())
+  country        String
+  city           String
+  district       String
+  address        String          @default("")
+  latitude       Float
+  longitude      Float
+  beachDistance  Float?
+  centerDistance Float?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  LifestyleArea  LifestyleArea[]
+  project        Project?
+}
+
+model ProjectYield {
+  id         String   @id @default(cuid())
+  projectId  String   @unique
+  guaranteed Float
+  potential  Float
+  occupancy  Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  years      String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectPricing {
+  id                   String   @id @default(cuid())
+  projectId            String   @unique
+  basePrice            Float
+  currencyId           String
+  pricePerSqm          Float
+  maintenanceFee       Float?
+  maintenanceFeePeriod String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  currency             Currency @relation(fields: [currencyId], references: [id])
+  project              Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([currencyId])
+}
+
+model Course {
+  id            String             @id @default(cuid())
+  title         String
+  description   String?
+  status        CourseStatus       @default(DRAFT)
+  imageUrl      String?
+  developerId   String
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  slug          String
+  marketContext String?
+  sources       String[]
+  sessions      AnalyticsSession[]
+  developer     Developer          @relation(fields: [developerId], references: [id])
+  modules       Module[]
+  quizAttempts  QuizAttempt[]
+  userProgress  UserProgress[]
+
+  @@map("courses")
+}
+
+model Module {
+  id          String       @id @default(cuid())
+  title       String
+  description String?
+  status      CourseStatus @default(DRAFT)
+  imageUrl    String?
+  courseId    String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  lessons     Lesson[]
+  course      Course       @relation(fields: [courseId], references: [id])
+  tests       Test[]
+
+  @@map("modules")
+}
+
+model Lesson {
+  id          String              @id @default(cuid())
+  title       String
+  content     String?
+  status      CourseStatus        @default(DRAFT)
+  imageUrl    String?
+  moduleId    String
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  analytics   AnalyticsMaterial[]
+  completions LessonCompletion[]
+  module      Module              @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  quiz        Quiz?
+
+  @@map("lessons")
+}
+
+model Test {
+  id        String       @id @default(cuid())
+  title     String
+  status    CourseStatus @default(DRAFT)
+  imageUrl  String?
+  moduleId  String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  questions Question[]
+  module    Module       @relation(fields: [moduleId], references: [id])
+
+  @@map("tests")
+}
+
+model Question {
+  id            String              @id @default(cuid())
+  questionText  String
+  questionType  QuestionType
+  correctAnswer String
+  testId        String
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  analytics     AnalyticsQuestion[]
+  test          Test                @relation(fields: [testId], references: [id])
+
+  @@map("questions")
+}
+
+model AnalyticsSession {
+  id                 String              @id @default(cuid())
+  agentId            String
+  courseId           String
+  startTime          DateTime            @default(now())
+  endTime            DateTime?
+  totalDuration      Int?
+  progressPercentage Float               @default(0)
+  status             SessionStatus       @default(IN_PROGRESS)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  materials          AnalyticsMaterial[]
+  questions          AnalyticsQuestion[]
+  agent              Agent               @relation(fields: [agentId], references: [id])
+  course             Course              @relation(fields: [courseId], references: [id])
+
+  @@map("analytics_sessions")
+}
+
+model AnalyticsMaterial {
+  id        String           @id @default(cuid())
+  sessionId String
+  lessonId  String
+  timeSpent Int
+  completed Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  lesson    Lesson           @relation(fields: [lessonId], references: [id])
+  session   AnalyticsSession @relation(fields: [sessionId], references: [id])
+
+  @@map("analytics_materials")
+}
+
+model AnalyticsQuestion {
+  id           String           @id @default(cuid())
+  sessionId    String
+  questionId   String
+  answer       String
+  isCorrect    Boolean
+  timeToAnswer Int
+  createdAt    DateTime         @default(now())
+  question     Question         @relation(fields: [questionId], references: [id])
+  session      AnalyticsSession @relation(fields: [sessionId], references: [id])
+
+  @@map("analytics_questions")
+}
+
+model UserProgress {
+  id               String            @id @default(cuid())
+  userId           String
+  courseId         String
+  timeSpent        Int               @default(0)
+  lastAccessed     DateTime          @default(now())
+  completedLessons String[]          @default([])
+  completedQuizzes String[]          @default([])
+  level            Int               @default(1)
+  quizScores       Json              @default("{}")
+  xp               Int               @default(0)
+  achievements     UserAchievement[]
+  course           Course            @relation(fields: [courseId], references: [id])
+  user             User              @relation(fields: [userId], references: [id])
+
+  @@unique([userId, courseId])
+  @@map("user_progress")
+}
+
+model LessonCompletion {
+  id          String   @id @default(cuid())
+  userId      String
+  lessonId    String
+  completedAt DateTime @default(now())
+  isPassed    Boolean  @default(false)
+  score       Float?
+  lesson      Lesson   @relation(fields: [lessonId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, lessonId])
+  @@map("lesson_completions")
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  userId      String
+  quizId      String
+  score       Float
+  completedAt DateTime @default(now())
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id])
+  quiz        Quiz     @relation(fields: [quizId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@map("quiz_attempts")
+}
+
+model Achievement {
+  id          String            @id @default(cuid())
+  title       String
+  description String
+  icon        String
+  xpReward    Int
+  conditions  Json
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  users       UserAchievement[]
+
+  @@map("achievements")
+}
+
+model UserAchievement {
+  id            String       @id @default(cuid())
+  userId        String
+  achievementId String
+  progressId    String
+  progress      Int          @default(0)
+  achieved      Boolean      @default(false)
+  achievedAt    DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  achievement   Achievement  @relation(fields: [achievementId], references: [id])
+  userProgress  UserProgress @relation(fields: [progressId], references: [id])
+  user          User         @relation(fields: [userId], references: [id])
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@index([achievementId])
+  @@index([progressId])
+  @@map("user_achievements")
+}
+
+model Quiz {
+  id          String         @id @default(cuid())
+  title       String
+  description String?
+  lessonId    String         @unique
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  attempts    QuizAttempt[]
+  questions   QuizQuestion[]
+  lesson      Lesson         @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@map("quizzes")
+}
+
+model QuizQuestion {
+  id        String       @id @default(cuid())
+  text      String
+  quizId    String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  options   QuizOption[]
+  quiz      Quiz         @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@map("quiz_questions")
+}
+
+model QuizOption {
+  id         String       @id @default(cuid())
+  text       String
+  isCorrect  Boolean      @default(false)
+  questionId String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  question   QuizQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@map("quiz_options")
+}
+
+model ProjectVideo {
+  id          String   @id @default(cuid())
+  projectId   String
+  type        String   @default("video")
+  url         String
+  title       String?
+  description String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model ProjectDocument {
+  id        String           @id @default(cuid())
+  projectId String
+  type      String
+  status    String
+  fileUrl   String
+  title     String?
+  category  DocumentCategory
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([type])
+  @@index([category])
+}
+
+model MasterPlanPoint {
+  id          String    @id @default(cuid())
+  projectId   String
+  x           Float
+  y           Float
+  svgPath     String?
+  coordinates Json?
+  type        String    @default("BUILDING")
+  style       Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  buildingId  String?
+  building    Building? @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model Building {
+  id               String            @id @default(cuid())
+  projectId        String
+  name             String
+  floors           Int
+  status           ProjectStatus     @default(DRAFT)
+  description      String?
+  imageUrl         String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  project          Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  media            BuildingMedia[]
+  floorPlans       FloorPlan[]
+  masterPlanPoints MasterPlanPoint[]
+  units            Unit[]
+
+  @@index([projectId])
+}
+
+model BuildingMedia {
+  id          String                @id @default(cuid())
+  buildingId  String
+  type        String                @default("image")
+  url         String
+  title       String?
+  description String?
+  category    BuildingMediaCategory @default(EXTERIOR)
+  layoutPlan  String?
+  floorPlan   String?
+  order       Int                   @default(0)
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  building    Building              @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+
+  @@index([buildingId])
+}
+
+model UnitMedia {
+  id          String            @id @default(cuid())
+  unitId      String
+  type        String            @default("image")
+  url         String
+  title       String?
+  description String?
+  category    UnitMediaCategory @default(GALLERY)
+  order       Int               @default(0)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  blurhash    String?
+  unit        Unit              @relation(fields: [unitId], references: [id], onDelete: Cascade)
+
+  @@index([unitId])
+}
+
+model Amenity {
+  id               String           @id @default(cuid())
+  name             String           @unique
+  description      String?
+  icon             String?          @default("default")
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  translations     Json[]
+  projectAmenities ProjectAmenity[]
+
+  @@map("Amenity")
+}
+
+model ProjectEmbedding {
+  id        String                @id @default(cuid())
+  projectId String                @unique
+  embedding Unsupported("vector")
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+  project   Project               @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Currency {
+  id                String           @id @default(cuid())
+  code              String           @unique
+  symbol            String
+  name              String
+  rate              Float
+  isBaseCurrency    Boolean          @default(false)
+  defaultForRegions String[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  paymentPlans      PaymentPlan[]
+  projectPricings   ProjectPricing[]
+  propertyTypes     PropertyType[]
+  units             Unit[]
+  discountUnits     Unit[]           @relation("UnitDiscountCurrency")
+}
+
+model UnitFeature {
+  id        String   @id @default(cuid())
+  unitId    String
+  name      String
+  value     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  unit      Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
+
+  @@index([unitId])
+}
+
+model ChatSession {
+  id        String                 @id @default(cuid())
+  userId    String
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+  context   Json?
+  embedding Unsupported("vector")?
+  messages  ChatMessage[]
+}
+
+model ChatMessage {
+  id              String                 @id @default(cuid())
+  sessionId       String
+  type            String
+  content         String
+  timestamp       DateTime               @default(now())
+  embedding       Unsupported("vector")?
+  metadata        Json?
+  session         ChatSession            @relation(fields: [sessionId], references: [id])
+  relatedProjects Project[]              @relation("ChatMessageToProject")
+}
+
+model UserContext {
+  id             String                 @id @default(cuid())
+  userId         String                 @unique
+  lastSessionId  String?
+  searchHistory  Json[]
+  preferences    Json?
+  embedding      Unsupported("vector")?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  viewedProjects Project[]              @relation("ProjectToUserContext")
+}
+
+model FloorPlan {
+  id            String      @id @default(cuid())
+  buildingId    String
+  floorNumber   Int
+  name          String?
+  imageUrl      String
+  imageBlurhash String?
+  svgData       String?
+  description   String?
+  status        String      @default("DRAFT")
+  order         Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  areas         FloorArea[]
+  building      Building    @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  units         Unit[]
+
+  @@unique([buildingId, floorNumber])
+  @@index([buildingId])
+}
+
+model FloorArea {
+  id          String    @id @default(cuid())
+  floorPlanId String
+  unitId      String?
+  svgPath     String
+  coordinates Json
+  area        Float?
+  type        String
+  name        String?
+  description String?
+  style       Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  floorPlan   FloorPlan @relation(fields: [floorPlanId], references: [id], onDelete: Cascade)
+  unit        Unit?     @relation(fields: [unitId], references: [id])
+
+  @@index([floorPlanId])
+  @@index([unitId])
+}
+
+model UnitImport {
+  id              String            @id @default(cuid())
+  projectId       String
+  importDate      DateTime          @default(now())
+  importedBy      String?
+  currency        String?
+  priceUpdateDate DateTime?
+  totalUnits      Int
+  createdUnits    Int
+  updatedUnits    Int
+  skippedUnits    Int
+  rawData         Json
+  processed       Boolean           @default(false)
+  fieldMappingId  String?
+  fieldMapping    UnitFieldMapping? @relation(fields: [fieldMappingId], references: [id])
+  project         Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  unitVersions    UnitVersion[]
+
+  @@index([projectId])
+  @@index([importDate])
+  @@index([fieldMappingId])
+}
+
+model UnitVersion {
+  id          String     @id @default(cuid())
+  unitId      String
+  importId    String
+  versionDate DateTime   @default(now())
+  number      String
+  floor       Int
+  buildingId  String
+  price       Float?
+  pricePerSqm Float?
+  status      UnitStatus
+  area        Float?
+  description String?
+  windowView  String?
+  metadata    Json?
+  import      UnitImport @relation(fields: [importId], references: [id], onDelete: Cascade)
+  unit        Unit       @relation(fields: [unitId], references: [id], onDelete: Cascade)
+
+  @@index([unitId])
+  @@index([importId])
+  @@index([versionDate])
+}
+
+model UnitFieldMapping {
+  id         String       @id @default(cuid())
+  projectId  String
+  userId     String
+  name       String
+  mappings   Json
+  isDefault  Boolean      @default(false)
+  isApproved Boolean      @default(true)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  project    Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  imports    UnitImport[]
+
+  @@index([projectId])
+  @@index([userId])
+}
+
+model PaymentStage {
+  id            String   @id @default(cuid())
+  projectId     String
+  stageName     String
+  paymentAmount Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model AgentCommission {
+  id         String   @id @default(cuid())
+  projectId  String
+  from       Float
+  to         Float
+  commission Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model CashbackBonus {
+  id            String   @id @default(cuid())
+  projectId     String
+  cashbackBonus Float
+  condition     String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model PurchaseConditions {
+  id                   String   @id @default(cuid())
+  projectId            String   @unique
+  currentCurrency      String?  @default("USD")
+  leaseholdDuration    Float?   @default(0)
+  reservationFee       Float?   @default(0)
+  reservationDuration  Int?     @default(0)
+  onTimePaymentDiscont Float?   @default(0)
+  utilitiesAndStafCost Float?   @default(0)
+  managmentFee         Float?   @default(0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  project              Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model AdditionalExpenses {
+  id             String   @id @default(cuid())
+  projectId      String
+  costOfExpenses Float?   @default(0)
+  nameOfExpenses String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model HomePageSection {
+  id                 String                       @id @default(cuid())
+  type               SectionType
+  status             SectionStatus                @default(DRAFT)
+  order              Int
+  isActive           Boolean                      @default(true)
+  settings           Json?                        @default("{}")
+  region             ContentRegion                @default(GLOBAL)
+  createdAt          DateTime                     @default(now())
+  updatedAt          DateTime                     @updatedAt
+  blogPosts          BlogPost[]
+  contentBlocks      ContentBlock[]
+  curatedCollections CuratedCollection[]
+  translations       HomePageSectionTranslation[]
+  lifestyleAreas     LifestyleArea[]
+  upcomingEvents     UpcomingEvent[]
+}
+
+model HomePageSectionTranslation {
+  id             String          @id @default(cuid())
+  sectionId      String
+  locale         String
+  title          String
+  subtitle       String?
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  section        HomePageSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([sectionId, locale])
+  @@index([sectionId])
+}
+
+model LifestyleArea {
+  id           String                     @id @default(cuid())
+  image        String
+  projectCount Int                        @default(0)
+  category     String                     @default("city")
+  order        Int                        @default(0)
+  isActive     Boolean                    @default(true)
+  region       ContentRegion              @default(GLOBAL)
+  createdAt    DateTime                   @default(now())
+  updatedAt    DateTime                   @updatedAt
+  sectionId    String?
+  locationId   String?
+  location     Location?                  @relation(fields: [locationId], references: [id])
+  section      HomePageSection?           @relation(fields: [sectionId], references: [id])
+  translations LifestyleAreaTranslation[]
+
+  @@index([sectionId])
+}
+
+model LifestyleAreaTranslation {
+  id             String        @id @default(cuid())
+  areaId         String
+  locale         String
+  title          String
+  description    String?
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  area           LifestyleArea @relation(fields: [areaId], references: [id], onDelete: Cascade)
+
+  @@unique([areaId, locale])
+  @@index([areaId])
+}
+
+model CuratedCollection {
+  id           String                         @id @default(cuid())
+  mainImage    String
+  projectCount Int                            @default(0)
+  order        Int                            @default(0)
+  isActive     Boolean                        @default(true)
+  region       ContentRegion                  @default(GLOBAL)
+  createdAt    DateTime                       @default(now())
+  updatedAt    DateTime                       @updatedAt
+  sectionId    String?
+  section      HomePageSection?               @relation(fields: [sectionId], references: [id])
+  translations CuratedCollectionTranslation[]
+  projects     Project[]                      @relation("CollectionToProject")
+
+  @@index([sectionId])
+}
+
+model CuratedCollectionTranslation {
+  id             String            @id @default(cuid())
+  collectionId   String
+  locale         String
+  title          String
+  description    String?
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  collection     CuratedCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+
+  @@unique([collectionId, locale])
+  @@index([collectionId])
+}
+
+model BlogPost {
+  id                String                 @id @default(uuid())
+  type              BlogPostType
+  image             String?
+  author            String?
+  authorRole        String?
+  authorAvatar      String?
+  readTime          Int?
+  isActive          Boolean                @default(true)
+  region            ContentRegion          @default(GLOBAL)
+  publishedAt       DateTime?
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  embedding         Unsupported("vector")?
+  homePageSectionId String?
+  HomePageSection   HomePageSection?       @relation(fields: [homePageSectionId], references: [id])
+  translations      BlogPostTranslation[]
+
+  @@index([region])
+  @@index([type])
+  @@index([isActive])
+}
+
+model BlogPostTranslation {
+  id             String   @id @default(uuid())
+  postId         String
+  locale         String
+  title          String
+  excerpt        String
+  content        String
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  post           BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, locale])
+  @@index([locale])
+}
+
+model UpcomingEvent {
+  id                String                     @id @default(uuid())
+  image             String?
+  startDate         DateTime
+  endDate           DateTime?
+  isActive          Boolean                    @default(true)
+  region            ContentRegion              @default(GLOBAL)
+  developerId       String?
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @default(now())
+  homePageSectionId String?
+  developer         Developer?                 @relation(fields: [developerId], references: [id])
+  HomePageSection   HomePageSection?           @relation(fields: [homePageSectionId], references: [id])
+  translations      UpcomingEventTranslation[]
+
+  @@index([developerId])
+  @@index([region])
+  @@index([isActive])
+  @@index([startDate])
+}
+
+model UpcomingEventTranslation {
+  id             String        @id @default(uuid())
+  eventId        String
+  locale         String
+  title          String
+  description    String
+  location       String
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  event          UpcomingEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, locale])
+  @@index([locale])
+}
+
+model ContentBlock {
+  id           String                    @id @default(cuid())
+  key          String
+  isActive     Boolean                   @default(true)
+  region       ContentRegion             @default(GLOBAL)
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
+  sectionId    String?
+  section      HomePageSection?          @relation(fields: [sectionId], references: [id])
+  translations ContentBlockTranslation[]
+
+  @@index([sectionId])
+  @@index([key])
+}
+
+model ContentBlockTranslation {
+  id        String       @id @default(cuid())
+  blockId   String
+  locale    String
+  title     String?
+  content   String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  block     ContentBlock @relation(fields: [blockId], references: [id], onDelete: Cascade)
+
+  @@unique([blockId, locale])
+  @@index([blockId])
+}
+
+model PropertyCollection {
+  id           String                          @id @default(uuid())
+  image        String?
+  isActive     Boolean                         @default(true)
+  region       ContentRegion                   @default(GLOBAL)
+  createdAt    DateTime                        @default(now())
+  updatedAt    DateTime                        @updatedAt
+  translations PropertyCollectionTranslation[]
+  properties   PropertyToCollection[]
+
+  @@index([region])
+  @@index([isActive])
+}
+
+model PropertyCollectionTranslation {
+  id             String             @id @default(uuid())
+  collectionId   String
+  locale         String
+  title          String
+  description    String
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  collection     PropertyCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+
+  @@unique([collectionId, locale])
+  @@index([locale])
+}
+
+model PropertyToCollection {
+  id           String             @id @default(uuid())
+  propertyId   String
+  collectionId String
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  collection   PropertyCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  property     Property           @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@unique([propertyId, collectionId])
+  @@index([propertyId])
+  @@index([collectionId])
+}
+
+enum ProjectType {
+  RESIDENTIAL
+  COMMERCIAL
+  MIXED_USE
+  INFRASTRUCTURE
+}
+
+enum ProjectStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+  PLANNING
+  CONSTRUCTION
+  COMPLETED
+}
+
+enum ProjectClass {
+  STANDARD
+  COMFORT
+  BUSINESS
+  PREMIUM
+  ELITE
+  LUXURY
+}
+
+enum BuildingStatus {
+  PLANNING
+  UNDER_CONSTRUCTION
+  COMPLETED
+}
+
+enum BuildingType {
+  RESIDENTIAL
+  COMMERCIAL
+  MIXED_USE
+}
+
+enum UnitLayoutType {
+  STUDIO
+  APARTMENT
+  PENTHOUSE
+  DUPLEX
+  TOWNHOUSE
+  VILLA
+}
+
+enum UnitLayoutStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+  SOLD_OUT
+}
+
+enum MediaCategory {
+  BANNER
+  AMENITIES
+  DEVELOPMENT_PROGRESS
+  MASTER_PLAN
+  CONSTRUCTION_PROGRESS
+}
+
+enum UnitStatus {
+  AVAILABLE
+  DRAFT
+  ACTIVE
+  RESERVED
+  SOLD
+}
+
+enum TransactionStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum UserRole {
+  ADMIN
+  DEVELOPER
+  AGENT
+  CLIENT
+}
+
+enum TransactionType {
+  SALE
+  RENT
+  RENTAL
+  VIEWING_REQUEST
+}
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  TEXT
+  TRUE_FALSE
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum DocumentCategory {
+  GENERAL
+  MARKETING
+  MASTER_PLAN
+}
+
+enum BuildingMediaCategory {
+  EXTERIOR
+  INTERIOR
+  CONSTRUCTION_PROGRESS
+  FLOOR_PLANS
+  LAYOUT_PLANS
+  AMENITIES
+}
+
+enum UnitMediaCategory {
+  GALLERY
+  FLOOR_PLAN
+  INTERIOR
+}
+
+enum SectionType {
+  HERO
+  BLOG_POSTS
+  LIFESTYLE_AREAS
+  CURATED_COLLECTIONS
+  LIFESTYLE_COLUMN
+  UPCOMING_EVENTS
+  CALL_TO_ACTION
+}
+
+enum SectionStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContentRegion {
+  GLOBAL
+  THAILAND
+  BALI
+  UAE
+}
+
+enum BlogPostType {
+  INTERVIEW
+  ARTICLE
+  GUIDE
+  NEWS
+  COLUMN
+}

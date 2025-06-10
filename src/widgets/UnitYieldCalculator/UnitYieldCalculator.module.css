@@ -1,0 +1,64 @@
+.unitYieldCalculator {
+  @apply mt-12;
+}
+
+.title {
+  @apply text-[30px] leading-[38px] text-gray-900;
+}
+
+.container {
+  @apply mt-6 flex gap-6;
+}
+
+.leftCard,
+.rightCard {
+  @apply p-6 rounded-lg flex-1;
+}
+
+.leftCard {
+  @apply bg-white flex flex-col gap-6 border border-[#D5D7DA];
+}
+
+.rightCard {
+  @apply bg-[#3062B8] rounded-lg;
+}
+
+.rightCard h4 {
+  @apply text-2xl leading-[28px] text-white;
+}
+
+.checkImage {
+  @apply min-w-6 min-h-6 relative;
+}
+
+.infoIcon {
+  @apply text-[#D7E7FE] size-[17px];
+}
+
+.subtitle {
+  @apply flex items-center gap-2 text-sm leading-5 text-[#D7E7FE] mt-2;
+}
+
+.tooltip {
+  @apply max-w-[270px] text-xs leading-[18px] text-gray-600;
+}
+
+.results {
+  @apply flex md:flex-col gap-6 md:px-6 md:py-4 md:bg-[#416DC6] rounded-lg md:mt-[74px] text-white justify-between md:justify-start items-end md:items-start;
+}
+
+.resultItemTitle {
+  @apply text-[#D7E7FE] font-medium text-xs leading-5;
+}
+
+.resultItemValue {
+  @apply text-xl leading-[28px] md:text-[30px] md:leading-[38px] font-semibold;
+}
+
+.chartContainer {
+  @apply w-full mt-6;
+}
+
+.chartContainer h4 {
+  @apply text-gray-900;
+}

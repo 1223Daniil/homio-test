@@ -1,0 +1,15 @@
+.unitQuickActions {
+  @apply flex justify-between items-center px-4 h-[72px] border border-[#E9EAEB] rounded-lg;
+}
+
+.unitQuickAction {
+  @apply flex flex-col items-center gap-[6px];
+}
+
+.unitQuickAction svg {
+  @apply size-6 text-[#717680];
+}
+
+.unitQuickAction p {
+  @apply text-[12px] leading-[18px] font-medium text-[#717680] text-center;
+}

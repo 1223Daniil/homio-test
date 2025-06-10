@@ -1,0 +1,87 @@
+.unitPurchaseConditions {
+  @apply mt-12;
+}
+
+.unitPurchaseConditions h3 {
+  @apply text-[30px] leading-[38px] font-medium text-default-900;
+}
+
+.facts {
+  @apply flex gap-8 mt-6;
+}
+
+.fact h4 {
+  @apply text-sm leading-5 font-medium text-gray-500;
+}
+
+.fact p {
+  @apply mt-1 text-xl leading-[28px] font-medium text-gray-900;
+}
+
+.accordion {
+  @apply mt-[5px] flex flex-col;
+}
+
+.accordionItem {
+  @apply border-b border-default-200;
+}
+
+.accordion:last-child .accordionItem {
+  @apply border-b-0;
+}
+
+.startContent {
+  @apply flex items-center gap-4 py-2;
+}
+
+.iconContainer {
+  @apply size-14 rounded-full bg-[#EBF2FF] flex items-center justify-center overflow-clip;
+}
+
+.startContentIcon {
+  @apply size-[28px] text-[#416DC6];
+}
+
+.startContentText {
+  @apply block text-start;
+}
+
+.startContentText h4 {
+  @apply text-xl leading-[28px] font-medium text-gray-900;
+}
+
+.startContentText p {
+  @apply text-sm leading-5 text-gray-700 mt-1;
+}
+
+.accordionItemContent {
+  @apply flex justify-between items-start pl-[72px] pb-4;
+}
+
+.accordionItemContent:not(:first-child) {
+  @apply mt-2 pt-[12px] border-t border-dashed border-default-200;
+}
+
+.col {
+  @apply text-base leading-6 font-medium text-gray-900 flex-1;
+}
+
+.titles {
+  @apply flex gap-4 justify-between text-start;
+}
+
+.titles h4 {
+  @apply flex-1;
+}
+
+.contentRow {
+  @apply flex justify-between items-start gap-8;
+}
+
+.content {
+  @apply flex flex-col gap-2 mt-2 text-sm leading-5 text-gray-500 flex-1;
+}
+
+.rowItem {
+  @apply flex-1;
+}

@@ -1,0 +1,63 @@
+.tooltip {
+  @apply w-[314px] h-[249px] m-5 flex flex-col;
+}
+
+.header {
+  @apply pb-3 border-b border-[#E9EAEB];
+}
+
+.header h4 {
+  @apply text-2xl leading-[28px] font-semibold text-[#414651];
+}
+
+.facts {
+  @apply flex mt-2 justify-between;
+}
+
+.fact {
+  @apply min-w-[70px] flex flex-col items-center;
+}
+
+.dateFact {
+  @apply min-w-[140px] col-span-2;
+}
+
+.factLabel {
+  @apply text-[#717680] text-xs leading-4 mb-1;
+}
+
+.factValue {
+  @apply text-sm leading-5 font-medium text-[#181D27];
+}
+
+.layoutsList {
+  @apply mt-3 flex flex-col gap-2 flex-1 overflow-y-auto;
+}
+
+.noLayouts {
+  @apply mt-3 flex flex-col items-center justify-center flex-1 text-[#717680] text-sm;
+}
+
+.layout {
+  @apply flex items-center justify-between gap-2;
+}
+
+.layoutContent {
+  @apply flex items-center gap-1;
+}
+
+.unitsCount {
+  @apply flex items-center justify-center w-8 h-8 rounded-full bg-[#F5F8FF] text-sm leading-5 font-medium text-[#416DC6];
+}
+
+.layoutData {
+  @apply text-sm leading-5 font-medium text-[#181D27];
+}
+
+.layoutPrice {
+  @apply text-[#717680];
+}
+
+.arrow {
+  @apply size-5 text-[#535862];
+}

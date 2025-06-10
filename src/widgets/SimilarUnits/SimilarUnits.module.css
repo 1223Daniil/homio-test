@@ -1,0 +1,23 @@
+.similarUnits {
+  @apply mt-12;
+}
+
+.swiperContainer {
+  @apply mt-6 relative;
+}
+
+.title {
+  @apply text-[30px] leading-[38px] font-semibold text-black;
+}
+
+.control {
+  @apply absolute z-10 top-[89px];
+}
+
+.prevButton {
+  @apply left-0;
+}
+
+.nextButton {
+  @apply left-auto right-0;
+}

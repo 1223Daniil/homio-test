@@ -1,0 +1,33 @@
+.similarProjects {
+  @apply mt-12;
+}
+
+.title {
+  @apply text-2xl leading-[28px] md:text-[30px] md:leading-[38px] font-semibold light:text-gray-900 dark:text-white;
+}
+
+.swiper {
+  @apply mt-3 md:mt-6 relative;
+}
+
+/* Добавим стили для слайдов Swiper */
+.swiper :global(.swiper-slide) {
+  @apply flex justify-center items-center w-full;
+  height: auto !important;
+}
+
+.control {
+  @apply absolute z-10 top-[89px] hidden md:flex justify-center items-center;
+}
+
+.prevButton {
+  @apply left-0;
+}
+
+.nextButton {
+  @apply right-0;
+}
+
+.controlDisabled {
+  @apply opacity-50 cursor-not-allowed;
+}

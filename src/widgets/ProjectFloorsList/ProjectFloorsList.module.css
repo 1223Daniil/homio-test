@@ -1,0 +1,19 @@
+.floors {
+  @apply flex flex-col h-full min-w-[114px] gap-3 pr-5 max-h-[684px] overflow-y-auto;
+}
+
+.floor {
+  @apply flex flex-col items-center justify-center min-h-[104px] w-full;
+}
+
+.floorButton {
+  @apply w-[88px] h-[22px] rounded-2xl flex items-center justify-center text-xs leading-[18px] font-medium bg-[#F5F5F5] text-center transition-all duration-300;
+}
+
+.selectedFloorButton {
+  @apply bg-[#3062B8] text-white;
+}
+
+.unitsCount {
+  @apply mt-1 text-xs leading-[18px] font-medium text-[#717680];
+}

@@ -1,0 +1,217 @@
+.controls {
+  @apply flex justify-between w-full items-center gap-2.5 mb-2.5 absolute top-3 px-3;
+}
+
+.controls button:hover {
+  @apply bg-gray-200;
+}
+
+.controlsButton * {
+  @apply relative z-10;
+}
+
+.imageContainer {
+  @apply relative w-full h-full overflow-hidden select-none flex items-center justify-center;
+}
+
+.imageContainer img {
+  @apply pointer-events-none select-none;
+}
+
+.image {
+  @apply pointer-events-none select-none object-contain;
+}
+
+.unitLayoytViewer {
+  @apply touch-none w-full overflow-hidden rounded-lg bg-[#FAFAFA] flex flex-col items-center justify-center relative;
+  height: 796px;
+}
+
+.zoomControl {
+  @apply flex items-center rounded-lg border border-[#D5D7DA] bg-white;
+}
+
+.zoomControlTextContainer {
+  @apply text-sm leading-5 font-semibold text-[#414651] w-[70px] border-x border-[#D5D7DA] flex items-center justify-center h-[40px];
+}
+
+.zoomControlButton {
+  @apply w-[44px] h-[40px] flex items-center justify-center text-[#717680];
+}
+
+.zoomControlButton svg {
+  @apply size-5;
+}
+
+.selector {
+  @apply min-w-[128px] w-fit h-[40px] bg-white rounded-lg text-[#414651];
+}
+
+.tooltip {
+  @apply relative overflow-hidden h-[104px];
+}
+
+.AVAILABLE::after {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#12B76A] rounded-l-lg;
+}
+
+.RESERVED::after {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#FFA800] rounded-l-lg;
+}
+
+.SOLD::after {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#717680] rounded-l-lg;
+}
+
+.UNAVAILABLE::after {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#D5D7DA] rounded-l-lg;
+}
+
+.tooltipHeader {
+  @apply flex items-center justify-between text-sm leading-5;
+}
+
+.tooltipPrice {
+  @apply text-sm leading-5 font-medium text-black mt-[10px];
+}
+
+.tooltipUnitNumber {
+  @apply text-[#3062B8] font-semibold flex items-center gap-[2px];
+}
+
+.totalArea {
+  @apply mt-[10px];
+}
+
+.tooltipUnitNumber button {
+  @apply text-[#717680] hover:text-[#3062B8] transition-all duration-300 cursor-pointer;
+}
+
+.tooltipLayoutName {
+  @apply text-[#717680];
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.7;
+    stroke-width: 0.3;
+  }
+  50% {
+    opacity: 1;
+    stroke-width: 0.5;
+  }
+  100% {
+    opacity: 0.7;
+    stroke-width: 0.3;
+  }
+}
+
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 0.5px rgba(34, 255, 56, 0.7));
+  }
+  50% {
+    filter: drop-shadow(0 0 2px rgba(34, 255, 56, 1));
+  }
+  100% {
+    filter: drop-shadow(0 0 0.5px rgba(34, 255, 56, 0.7));
+  }
+}
+
+.activeUnit {
+  animation:
+    pulse 2s infinite,
+    glow 3s infinite;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.glowEffect {
+  animation: pulse 2s infinite alternate;
+  filter: drop-shadow(0 0 3px rgba(34, 255, 56, 0.8));
+}
+
+.loaderContainer {
+  @apply absolute inset-0 flex items-center justify-center bg-[#FAFAFA];
+}
+
+.noImageContainer {
+  @apply flex items-center justify-center w-full h-full;
+}
+
+.noImageText {
+  @apply text-lg font-medium text-gray-500;
+}
+
+/* Стили для тултипа юнита */
+.unitTooltip {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px 12px;
+  min-width: 100px;
+  pointer-events: none;
+  z-index: 1000;
+  transform-origin: top left;
+  animation: tooltipFadeIn 0.2s ease-out;
+}
+
+.unitTooltipContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.unitTooltipTitle {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.unitTooltipSubtitle {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Стили для сообщений об ошибках */
+.tooltip-empty,
+.tooltip-error,
+.tooltip-no-data {
+  padding: 8px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.tooltip-empty {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.tooltip-error {
+  background-color: #fff0f0;
+  color: #e53935;
+}
+
+.tooltip-no-data {
+  background-color: #f8f8f8;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tooltip-no-data p {
+  margin: 0;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

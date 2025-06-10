@@ -1,0 +1,19 @@
+.masterPlan {
+  @apply w-[91.47vw] h-[55.73vw] relative bg-white rounded-lg border border-gray-300 overflow-hidden;
+}
+
+.image {
+  @apply object-contain;
+}
+
+.point {
+  @apply absolute size-[4.27vw] rounded-full bg-white border border-[#416DC6] flex items-center justify-center;
+}
+
+.pointActive .dot {
+  @apply opacity-100;
+}
+
+.dot {
+  @apply size-[6px] rounded-full bg-[#416DC6] opacity-0 transition-all duration-300;
+}

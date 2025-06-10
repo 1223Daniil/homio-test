@@ -1,0 +1,19 @@
+.control {
+  @apply absolute size-[44px] rounded-full bg-[#FAFAFA] flex items-center justify-center z-20 hover:brightness-75 transition-all duration-300 border border-[#D5D7DA];
+}
+
+.controlIcon {
+  @apply text-2xl light:text-gray-900 dark:text-white;
+}
+
+.prev {
+  @apply rotate-180;
+}
+
+.prevButton {
+  @apply left-0 top-1/4;
+}
+
+.nextButton {
+  @apply right-0 top-1/4;
+}

@@ -1,0 +1,39 @@
+.mediaGalleryHeader {
+  @apply flex items-center justify-between py-8 px-6 border-b border-[#717680];
+}
+
+.tabContainer {
+  @apply flex items-center gap-4;
+}
+
+.tab {
+  @apply pb-3 flex items-center gap-2 text-[#717680] border-b-[2px] border-transparent text-sm leading-5 font-semibold;
+}
+
+.tabIcon {
+  @apply size-5;
+}
+
+.tabActive {
+  @apply border-[#3062B8] text-[#3062B8];
+}
+
+.unitQuickActions {
+  @apply border-none w-[212px];
+}
+
+.actions {
+  @apply flex items-center gap-5;
+}
+
+.request {
+  @apply bg-[#039855] text-white rounded-lg w-[288px] h-12 text-base leading-6 font-semibold;
+}
+
+.close {
+  @apply size-9 flex justify-center items-center;
+}
+
+.close svg {
+  @apply text-[#535862] size-5 hover:text-black transition-all duration-300;
+}

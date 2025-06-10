@@ -1,0 +1,23 @@
+.overlay {
+  @apply fixed h-[100dvh] inset-0 z-50 flex items-center justify-center;
+}
+
+.modal {
+  @apply w-full h-full bg-white flex flex-col;
+}
+
+.content {
+  @apply mt-[15px] px-12 flex-1 overflow-y-auto pb-12;
+}
+
+.filterContainer {
+  @apply flex gap-2 p-1 border border-[#D5D7DA] rounded-[10px] text-[#535862] text-sm leading-5 font-semibold w-fit;
+}
+
+.filter {
+  @apply rounded-lg w-[106px] h-9 flex items-center justify-center text-[#717680] transition-all duration-300;
+}
+
+.filterActive {
+  @apply bg-[#717680] text-white;
+}

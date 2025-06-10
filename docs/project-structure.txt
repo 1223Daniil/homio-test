@@ -1,0 +1,187 @@
+# Next Homio Project Structure
+
+## Core Technologies
+------------------
+- Next.js 14 with App Router
+- TypeScript for type safety
+- Prisma ORM with PostgreSQL
+- NextUI (replacing Mantine UI)
+- next-intl for internationalization
+- Docker for development
+
+## Directory Structure
+--------------------
+/src
+  /app                      # Next.js App Router
+    /[locale]              # Internationalized routes
+      /dashboard           # Dashboard pages
+      /projects           # Project management
+      /developers         # Developer profiles
+      /page.tsx           # Home page
+    /api                  # API routes
+      /projects          # Project-related endpoints
+      /developers        # Developer-related endpoints
+      /media            # Media handling endpoints
+  /components             # React components
+    /layout              # Layout components
+    /projects           # Project components
+    /developers         # Developer components
+    /common             # Shared components
+    /ui                 # UI components
+  /hooks                 # Custom React hooks
+  /lib                   # Core utilities
+    /prisma.ts          # Prisma client
+    /validation.ts      # Validation utilities
+  /locales              # Translation files
+    /en.json           # English translations
+    /ru.json           # Russian translations
+  /types                # TypeScript definitions
+  /utils               # Helper functions
+/prisma                 # Database
+  /schema.prisma       # Database schema
+  /migrations         # Database migrations
+/public                # Static assets
+/docs                  # Documentation
+
+## Key Features
+-------------
+1. Internationalization
+   - next-intl for translations
+   - Middleware-based routing
+   - Language switching
+   - Translation fallbacks
+
+2. Project Management
+   - CRUD operations
+   - Media handling
+   - Unit management
+   - Status tracking
+
+3. Developer Profiles
+   - Portfolio management
+   - Project association
+   - Contact information
+
+4. Authentication
+   - Role-based access
+   - Protected routes
+   - Session management
+
+5. Media Management
+   - Image uploads
+   - File organization
+   - Media optimization
+
+## Data Models
+------------
+1. Project
+   - Basic information
+   - Translations
+   - Media gallery
+   - Units
+   - Status tracking
+
+2. Developer
+   - Profile information
+   - Translations
+   - Projects
+   - Contact details
+
+3. Unit
+   - Details
+   - Status
+   - Project association
+   - Price information
+
+4. Media
+   - File information
+   - Associations
+   - Ordering
+   - Types
+
+## API Structure
+-------------
+1. Projects
+   - GET /api/projects
+   - GET /api/projects/[id]
+   - POST /api/projects
+   - PUT /api/projects/[id]
+   - DELETE /api/projects/[id]
+
+2. Units
+   - GET /api/projects/[id]/units
+   - POST /api/projects/[id]/units
+   - PUT /api/projects/[id]/units/[unitId]
+   - DELETE /api/projects/[id]/units/[unitId]
+
+3. Media
+   - POST /api/media/upload
+   - DELETE /api/media/[id]
+   - PUT /api/media/[id]/order
+
+## Component Organization
+----------------------
+1. Layout Components
+   - ClientLayout
+   - DashboardLayout
+   - Navigation
+
+2. Project Components
+   - ProjectList
+   - ProjectDetails
+   - UnitsList
+   - MediaGallery
+
+3. Form Components
+   - ProjectForm
+   - UnitForm
+   - MediaUpload
+
+4. Common Components
+   - StatusBadge
+   - LoadingSpinner
+   - ErrorBoundary
+
+## State Management
+----------------
+1. Server State
+   - Prisma queries
+   - API responses
+   - Cache management
+
+2. Client State
+   - React hooks
+   - Form state
+   - UI state
+
+## Error Handling
+--------------
+1. Client-side
+   - Form validation
+   - API error handling
+   - UI error states
+
+2. Server-side
+   - Input validation
+   - Database errors
+   - API responses
+
+## Development Workflow
+--------------------
+1. Database
+   - Schema updates
+   - Migration creation
+   - Data seeding
+
+2. Feature Development
+   - Component creation
+   - API implementation
+   - Translation addition
+
+3. Testing
+   - Component testing
+   - API testing
+   - Integration tests
+
+
+Let's rock!

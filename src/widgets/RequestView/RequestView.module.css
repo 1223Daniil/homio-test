@@ -1,0 +1,91 @@
+.requestView {
+  @apply p-4 border border-[#E9EAEB] rounded-lg;
+}
+
+.title {
+  @apply text-2xl leading-[30px] text-[#222222] font-medium;
+}
+
+.price {
+  @apply text-[30px] leading-[38px] text-[#181D27] font-semibold;
+}
+
+.area {
+  @apply text-sm leading-5 text-[#717680];
+}
+
+.calendarSlider {
+  @apply mt-4 relative max-w-[267px] mx-auto;
+}
+
+.control {
+  @apply absolute top-[27px] left-[-21px] scale-100 transition-all duration-300;
+}
+
+.controlDisabled {
+  @apply !scale-0;
+}
+
+.controlNext {
+  @apply left-auto right-[-21px];
+}
+
+.desiredDate {
+  @apply mt-[2px] text-[#676767] text-center text-xs leading-[18px];
+}
+
+.buttons {
+  @apply mt-2;
+}
+
+.requestViewButton {
+  @apply max-w-[288px] w-full bg-[#039855] text-white;
+}
+
+.requestViewButtonText {
+  @apply text-center text-xs leading-[18px] text-[#676767];
+}
+
+.orContainer {
+  @apply flex justify-center items-center mt-4 relative;
+}
+
+.or {
+  @apply w-fit text-xs leading-[18px] text-[#717680] bg-white relative px-5;
+}
+
+.orContainer::before {
+  @apply content-[''] absolute top-1/2 left-0 w-full h-[1px] bg-[#E9EAEB];
+}
+
+.requestDetailsButtonContainer {
+  @apply mt-2;
+}
+
+.requestDetailsButton {
+  @apply max-w-[288px] w-full bg-white text-[#414651] border border-[#D5D7DA];
+}
+
+.calendarSlider {
+  @apply relative;
+}
+
+.calendarSlide {
+  @apply border border-[#D5D7DA] rounded-[6px] py-[10px] w-[85px] flex flex-col justify-center items-center text-[#181D27] transition-all duration-300;
+}
+
+.calendarSlideActive {
+  @apply border-[#3062B8] bg-[#F5F8FF] text-[#3062B8];
+}
+
+.calendarSlideDay {
+  @apply text-sm leading-5;
+}
+
+.calendarSlideDate {
+  @apply text-[30px] leading-[30px] font-semibold;
+}
+
+.calendarSlideMonth {
+  @apply text-sm leading-5;
+}

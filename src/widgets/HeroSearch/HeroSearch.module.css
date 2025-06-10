@@ -1,0 +1,23 @@
+.title {
+  @apply text-4xl leading-[44px] max-w-[448px] text-left;
+}
+
+.tabs {
+  @apply flex;
+}
+
+.tab {
+  @apply text-sm leading-5 rounded-t-[8px];
+}
+
+.searchForm {
+  @apply flex items-center;
+}
+
+.select {
+  @apply px-[14px] h-[56px] w-fit;
+}
+
+.rangeContainer {
+  @apply px-[14px] h-[75px] min-w-[200px] flex flex-col justify-center;
+}

@@ -1,0 +1,95 @@
+.availability {
+  @apply lg:max-w-[720px] xl:max-w-none mx-auto;
+}
+
+.header {
+  @apply flex items-center justify-between;
+}
+
+.filters {
+  @apply flex items-center;
+}
+
+.fields {
+  @apply flex gap-4;
+}
+
+.fieldsCol {
+  @apply flex flex-col gap-3;
+}
+
+.select {
+  @apply flex-1 px-[14px] py-[10px] bg-white rounded-lg border border-[#D5D7DA] text-base leading-6 text-[#181D27] font-medium;
+}
+
+.unitsList {
+  @apply mt-6 relative;
+}
+
+.sliderControl {
+  @apply top-[120px];
+}
+
+.sliderControlNext {
+  @apply left-auto right-0;
+}
+
+.unit {
+  @apply p-[6px] bg-white rounded-lg border border-[#D5D7DA];
+}
+
+.activeUnit {
+  @apply border-[#416DC6];
+}
+
+.unitImage {
+  @apply relative w-[320px] h-[180px] rounded-lg bg-[#F5F5F5];
+}
+
+.unitCheckbox {
+  @apply absolute top-3 left-3 size-5 rounded-[6px];
+}
+
+.content {
+  @apply flex flex-col px-3 mt-3;
+}
+
+.unitName {
+  @apply flex items-center justify-between;
+}
+
+.unitName h3 {
+  @apply text-sm leading-5 text-[#717680];
+}
+
+.unitsCount {
+  @apply text-xs leading-[18px] text-[#3062B8] bg-[#F5F8FF] rounded-2xl px-2 py-[2px];
+}
+
+.content h4 {
+  @apply text-xl leading-[28px] text-[#181D27] font-semibold;
+}
+
+.price {
+  @apply text-sm leading-5 font-medium;
+}
+
+.unitImage {
+  @apply object-contain;
+}
+
+.facts {
+  @apply mt-2 pt-2 border-t border-[#E9EAEB] flex justify-between;
+}
+
+.fact {
+  @apply text-sm leading-5 font-medium text-[#717680] text-left;
+}
+
+.factTitle {
+  @apply text-[#717680];
+}
+
+.factValue {
+  @apply text-[#181D27];
+}

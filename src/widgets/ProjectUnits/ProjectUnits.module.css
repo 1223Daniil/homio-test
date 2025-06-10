@@ -1,0 +1,63 @@
+.title {
+  @apply flex justify-between items-center;
+}
+
+.title p {
+  @apply text-sm leading-5 font-semibold;
+}
+
+.filters {
+  @apply flex items-center rounded-lg overflow-hidden border border-[#D5D7DA];
+}
+
+.filter {
+  @apply px-4 h-[40px] flex items-center gap-2 text-[#414651] text-sm leading-5 transition-all duration-300 relative;
+}
+
+.filter svg {
+  @apply size-5;
+}
+
+.filter:nth-child(2) {
+  @apply border-x border-[#D5D7DA];
+}
+
+.filterActive {
+  @apply bg-[#717680] text-white;
+}
+
+.filterActive svg {
+  @apply text-white;
+}
+
+.statuses {
+  @apply mt-6 flex gap-[13px] items-center;
+}
+
+.status {
+  @apply flex items-center gap-2;
+}
+
+.dot {
+  @apply size-2 rounded-full;
+}
+
+.dotAvailable {
+  @apply bg-[#12B76A];
+}
+
+.dotReserved {
+  @apply bg-[#F79009];
+}
+
+.dotSold {
+  @apply bg-[#717680];
+}
+
+.dotUnavailable {
+  @apply bg-[#D5D7DA];
+}
+
+.content {
+  @apply mt-6 relative lg:max-w-[720px] xl:max-w-none mx-auto;
+}

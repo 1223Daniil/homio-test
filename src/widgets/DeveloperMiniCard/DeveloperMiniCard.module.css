@@ -1,0 +1,48 @@
+.developerMiniCard {
+  @apply p-4 border border-[#E9EAEB] rounded-lg;
+}
+
+.locationContainer {
+  @apply flex items-center gap-3;
+}
+
+.map,
+.developerImage {
+  @apply min-w-[64px] min-h-[64px] rounded-lg relative overflow-clip;
+}
+
+.locationInfo {
+  @apply flex flex-col gap-1;
+}
+
+.locationIcon {
+  @apply min-w-4 min-h-4;
+}
+
+.locationDetail {
+  @apply flex items-center gap-1;
+}
+
+.locationName {
+  @apply text-sm leading-5 font-semibold text-[#3062B8];
+}
+
+.locationDetails {
+  @apply text-sm leading-5 font-medium text-[#717680];
+}
+
+.divider {
+  @apply bg-[#E9EAEB] my-3;
+}
+
+.developerInfo {
+  @apply flex items-center gap-3;
+}
+
+.developerName p {
+  @apply text-sm leading-5 font-medium text-[#717680];
+}
+
+.developerName h4 {
+  @apply text-xl leading-[28px] font-semibold text-[#181D27];
+}

@@ -1,0 +1,60 @@
+.projectCard {
+  @apply p-[6px] border border-[#D5D7DA] rounded-xl light:bg-white dark:bg-gray-700 cursor-pointer max-h-[306px] h-[306px] md:max-h-[352px] md:h-[352px] flex flex-col w-full max-w-[280px] md:max-w-[400px] mx-auto;
+}
+
+.projectCardImage {
+  @apply relative w-full h-[156px] md:h-[209px] rounded-lg overflow-hidden flex-shrink-0;
+}
+
+.projectImage {
+  @apply object-cover;
+}
+
+.developerLogoContainer {
+  @apply absolute left-3 bottom-3;
+}
+
+.developerLogo {
+  @apply relative size-16 rounded-lg overflow-hidden border light:border-[#E9EAEB] bg-white flex-shrink-0;
+}
+
+.developerLogoPlaceholder {
+  @apply flex items-center justify-center w-full h-full bg-gray-100 dark:bg-gray-600;
+}
+
+.developerImage {
+  @apply object-cover;
+}
+
+.cardData {
+  @apply flex-grow flex flex-col my-4 px-6 text-left;
+}
+
+.cardTitle {
+  @apply text-[18px] leading-[22px] font-semibold line-clamp-1 mb-1 text-[#416DC6] md:text-gray-900;
+}
+
+.cardPrice {
+  @apply text-gray-900 leading-5 text-sm md:text-[18px] md:leading-[22px] font-semibold mt-[2px];
+}
+
+.locationData {
+  @apply mt-2 flex flex-col gap-1;
+}
+
+.location {
+  @apply flex items-center gap-[9px];
+}
+
+.location svg {
+  @apply text-[#A4A7AE] flex-shrink-0;
+}
+
+.location p,
+.location h4 {
+  @apply text-sm leading-5 text-[#717680] truncate;
+}
+
+.dot {
+  @apply size-[3px] rounded-full bg-[#A4A7AE];
+}

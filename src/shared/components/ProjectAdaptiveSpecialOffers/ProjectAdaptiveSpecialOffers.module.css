@@ -1,0 +1,43 @@
+.container {
+  @apply mt-12 md:hidden;
+}
+
+.title {
+  @apply text-2xl font-semibold leading-[28px] lg:hidden;
+}
+
+.swiper {
+  @apply !mt-3;
+}
+
+.offer {
+  @apply flex items-center justify-between bg-[#EBF2FF] h-[70px]  px-4 rounded-lg;
+}
+
+.offerContent {
+  @apply flex items-center gap-4;
+}
+
+.offerIcon {
+  @apply size-8 rounded-full bg-[#416DC6] border-[4px] border-[#3062B8] flex items-center justify-center;
+}
+
+.offerIcon svg {
+  @apply min-w-3 min-h-3 text-white;
+}
+
+.offerTitle {
+  @apply text-sm leading-5 text-gray-900 font-semibold;
+}
+
+.offerDescription {
+  @apply text-gray-500 text-xs leading-[18px];
+}
+
+.offerArrowContainer {
+  @apply size-9 flex items-center justify-center;
+}
+
+.offerArrow {
+  @apply text-gray-500 size-5;
+}

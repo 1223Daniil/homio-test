@@ -1,0 +1,23 @@
+.developerBanner {
+  @apply p-2 gap-2;
+  @apply 2xl:p-3 bg-white rounded-lg flex 2xl:gap-3 w-fit ml-auto;
+}
+
+.developerBannerImage {
+  @apply size-12;
+  @apply 2xl:size-[64px] rounded-lg overflow-clip relative;
+}
+
+.developerBannerImage img {
+  @apply object-cover object-center;
+}
+
+.developerBannerContent p {
+  @apply text-xs leading-4;
+  @apply 2xl:text-sm 2xl:leading-5 text-[#717680] font-medium;
+}
+
+.developerBannerContent h3 {
+  @apply text-lg;
+  @apply 2xl:text-xl 2xl:leading-[28px] text-[#181D27] mt-[2px] font-semibold;
+}

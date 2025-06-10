@@ -1,0 +1,101 @@
+.sliderContainer {
+  @apply h-[698px] relative rounded-lg overflow-hidden w-full;
+}
+
+.slider {
+  @apply w-full h-full;
+}
+
+.slide {
+  @apply w-full h-[698px] relative aspect-video;
+}
+
+.slide img {
+  @apply object-cover object-center;
+}
+
+.slide :global(video) {
+  @apply object-cover object-center;
+}
+
+.sliderOverlay {
+  @apply absolute inset-0 flex flex-col px-8 pt-8 z-10;
+}
+
+.projectDetails {
+  @apply mt-[230px] max-w-[420px];
+  @apply 2xl:mt-[113px] text-white 2xl:max-w-[455px];
+}
+
+.projectDetailsPrice {
+  @apply text-lg;
+  @apply 2xl:text-2xl 2xl:leading-[28px] font-semibold;
+}
+
+.projectDetailsName {
+  @apply mt-1 text-[36px] leading-[36px];
+  @apply 2xl:mt-2 2xl:text-[48px] 2xl:leading-[60px] font-semibold;
+}
+
+.projectDetailsLocation {
+  @apply gap-2 mt-2 text-base leading-4;
+  @apply flex flex-col 2xl:gap-4 2xl:mt-6 2xl:text-lg 2xl:leading-6 font-medium;
+}
+
+.projectDetailsLocationItem {
+  @apply flex items-start gap-2;
+}
+
+.projectDetailsLocationItem p {
+  @apply w-max;
+}
+
+.locationIcon {
+  @apply size-4;
+  @apply size-5 text-white;
+}
+
+.chooseFlatButton {
+  @apply min-w-[180px] h-12;
+  @apply 2xl:min-w-[207px] 2xl:h-14 bg-[#416DC6] rounded-lg flex items-center justify-center px-4 mt-6 gap-3;
+}
+
+.chooseFlatButton svg {
+  @apply size-6 text-white;
+}
+
+.controls {
+  @apply bottom-[110px] pl-[490px] pr-[18px];
+  @apply absolute 2xl:bottom-[160px] left-0 flex 2xl:pl-[596px] w-full 2xl:pr-8;
+}
+
+.controlsContent {
+  @apply flex items-end justify-between flex-1;
+}
+
+.controlButtons {
+  @apply flex gap-4;
+}
+
+.controlButton {
+  @apply size-[44px] bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors duration-300;
+}
+
+.controlButtonIcon {
+  @apply size-6 text-[#414651];
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1000px 100%;
+  animation: shimmer 1.5s infinite linear;
+}

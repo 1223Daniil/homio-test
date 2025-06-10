@@ -1,0 +1,12 @@
+.floorPlan {
+  @apply flex w-full;
+  height: var(--floor-plan-height, 708px);
+  width: var(--floor-plan-width, 100%);
+}
+
+/* Стили для адаптивности */
+@media (max-width: 768px) {
+  .floorPlan {
+    @apply flex-col;
+  }
+}

@@ -1,0 +1,266 @@
+{
+  "timestamp": "2025-02-07T21:37:45.509Z",
+  "total": 65,
+  "translations": [
+    {
+      "locale": "en",
+      "key": "Projects.status.ACTIVE"
+    },
+    {
+      "locale": "en",
+      "key": "Projects.totalUnits"
+    },
+    {
+      "locale": "en",
+      "key": "Projects.type.RESIDENTIAL"
+    },
+    {
+      "locale": "en",
+      "key": "Projects.units"
+    },
+    {
+      "locale": "en",
+      "key": "Search"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.actions"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.address"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.cancel"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.contactEmail"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.contactPhone"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.createNew"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.description"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.editAgency"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.name"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.tableAria"
+    },
+    {
+      "locale": "ru",
+      "key": "Agencies.update"
+    },
+    {
+      "locale": "ru",
+      "key": "Common"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.apply"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.backToProject"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.developer"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.edit.subtitle"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.edit.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.forms.project.completionDate"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.forms.project.description"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.forms.project.name"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.forms.project.save"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.forms.project.siteUrl"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.forms.project.type"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.forms.specialOffers.fields.validUntil"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.infrastructure.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.investment potential"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.amenities.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.amenities.manage"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.amenities.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.construction.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.construction.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.documents.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.documents.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.general.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.general.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.location.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.location.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.locationAssessment.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.locationAssessment.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.marketing.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.marketing.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.parameters.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.parameters.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.specialOffers.label"
+    },
+    {
+      "locale": "ru",
+      "key": "projects.sections.specialOffers.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.specialOffers.title"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.sections.specialOffers.validUntilPrefix"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.selectDeveloperPlaceholder"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.status.active"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.status.completed"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.status.construction"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.status.draft"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.status.inactive"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.status.label"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.status.planning"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.types.commercial"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.types.mixedUse"
+    },
+    {
+      "locale": "ru",
+      "key": "Projects.types.residential"
+    },
+    {
+      "locale": "ru",
+      "key": "thinking"
+    },
+    {
+      "locale": "ru",
+      "key": "typeMessage"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+.tags {
+  @apply mt-12 flex flex-wrap gap-3;
+}
+
+.tag {
+  @apply px-3 py-1 rounded-2xl bg-[#F5F5F5] text-sm leading-5 text-[#414651] flex items-center justify-center;
+}

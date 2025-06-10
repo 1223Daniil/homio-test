@@ -1,0 +1,23 @@
+.cardsGrid {
+  @apply grid grid-cols-3 md:grid-cols-4 gap-3 mt-6;
+}
+
+.facilityCard {
+  @apply light:bg-white dark:bg-gray-900 rounded-lg h-[92px] md:h-[72px] flex flex-col md:flex-row items-center gap-2 justify-center border light:border-gray-300 dark:border-gray-800;
+}
+
+.facilityCardIcon {
+  @apply text-[#3062B8] size-6;
+}
+
+.facilityCardTitle {
+  @apply text-xs leading-[18px] md:text-base md:leading-6 text-gray-500;
+}
+
+.showAllFacilities {
+  @apply flex items-center gap-[13px] text-sm text-[#3062B8] font-medium mt-3;
+}
+
+.arrowIcon {
+  @apply min-w-[10px] min-h-[5px] text-[#3062B8];
+}

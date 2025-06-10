@@ -1,0 +1,27 @@
+.mapFilters {
+  @apply flex gap-2 flex-wrap;
+}
+
+.filter {
+  @apply flex items-center justify-between h-[30px] px-[6px] rounded-2xl border border-[#E0E0E0] bg-[#FAFAFA] overflow-clip gap-1;
+}
+
+.filterActive {
+  @apply border-[#416DC6] bg-[#FAFAFA];
+}
+
+.filterActive svg {
+  @apply text-[#416DC6] fill-[#416DC6];
+}
+
+.svgSize {
+  @apply size-[20px];
+}
+
+.filter svg {
+  @apply text-[#717680] fill-[#717680];
+}
+
+.filter p {
+  @apply text-sm leading-5 text-[#535862];
+}

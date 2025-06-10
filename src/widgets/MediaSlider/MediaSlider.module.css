@@ -1,0 +1,205 @@
+.swiper {
+  @apply relative;
+}
+
+.mediaItemImage {
+  @apply relative rounded-[6px] overflow-clip w-full h-[470px] 2xl:h-[570px];
+}
+
+.videoContainer {
+  @apply w-full h-full relative;
+}
+
+.videoPlayer {
+  @apply w-full h-full object-cover absolute top-0 left-0;
+}
+
+.factsContainer {
+  @apply absolute top-6 left-6 w-full flex flex-wrap items-center gap-[13px] h-fit;
+}
+
+.fact {
+  @apply bg-[#F5F5F5] rounded-2xl text-[#414651] px-3 py-1;
+}
+
+.control {
+  @apply absolute top-[263px] left-1;
+}
+
+.controlNext {
+  @apply !left-auto right-1;
+}
+
+.pagination {
+  @apply flex items-center gap-3 mx-auto mt-4 relative;
+}
+
+.paginationItem {
+  @apply relative rounded-[6px] overflow-hidden transition-all;
+  width: 109px;
+  height: 82px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+}
+
+.paginationItemActive {
+  border-color: #535862;
+}
+
+.paginationItemImage {
+  @apply w-full h-full object-cover transition-all duration-300;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.paginationItemImageSelected {
+  @apply p-[2px];
+}
+
+.paginationControl {
+  @apply absolute top-[19px] left-1;
+}
+
+.videoIndicator {
+  @apply absolute bottom-2 right-2 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center text-white z-10;
+}
+
+/* Стили для обработки ошибок */
+.errorContainer {
+  @apply bg-gray-100 flex items-center justify-center;
+}
+
+.errorMessage {
+  @apply text-gray-500 text-center px-2 py-1;
+}
+
+.videoErrorOverlay {
+  @apply absolute inset-0 bg-black/70 flex items-center justify-center text-white text-center p-4 z-20;
+}
+
+/* Стили для видео в пагинации */
+.paginationVideoWrapper {
+  @apply relative w-full h-full overflow-hidden;
+}
+
+.paginationVideoItem {
+  @apply absolute top-0 left-0 w-full h-full object-cover z-0 pointer-events-none opacity-100;
+}
+
+/* Новые стили для обработки состояний загрузки */
+.imagePlaceholder {
+  @apply absolute inset-0 bg-gray-200 flex items-center justify-center text-gray-500 z-10;
+}
+
+.imageError {
+  @apply absolute inset-0 bg-red-100 flex items-center justify-center text-red-500 z-10 p-2;
+}
+
+.imageVisible {
+  @apply opacity-100 transition-opacity duration-300;
+}
+
+.imageHidden {
+  @apply opacity-0;
+}
+
+.hidden {
+  @apply opacity-0 !important;
+  pointer-events: none;
+}
+
+.mediaItem {
+  @apply relative w-full;
+}
+
+/* Индикатор загрузки */
+.imageLoader {
+  @apply absolute inset-0 flex items-center justify-center bg-gray-200/40 z-10;
+}
+
+.spinner {
+  @apply w-8 h-8 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.imageLoading {
+  @apply opacity-50;
+}
+
+.videoLoading {
+  @apply opacity-0;
+}
+
+.sliderContainer {
+  @apply relative w-full hidden md:block;
+}
+
+.mainSwiper {
+  @apply w-full h-[470px] 2xl:h-[570px] relative rounded-[6px] overflow-hidden;
+}
+
+.slide {
+  @apply relative w-full h-full;
+}
+
+.slideImage {
+  @apply object-cover w-full h-full;
+}
+
+.loaderContainer {
+  @apply absolute inset-0 flex items-center justify-center bg-black/20 z-10;
+}
+
+.prevButton {
+  @apply absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full z-10;
+}
+
+.nextButton {
+  @apply absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full z-10;
+}
+
+.paginationSwiper {
+  @apply w-full;
+}
+
+.paginationImage {
+  @apply relative w-full h-full overflow-hidden;
+}
+
+/* Стили для шиммер-эффекта загрузки изображений */
+.shimmerWrapper {
+  @apply absolute inset-0 bg-gray-200 overflow-hidden z-10;
+}
+
+.shimmer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerEffect 1.5s infinite linear;
+}
+
+@keyframes shimmerEffect {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

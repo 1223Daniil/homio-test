@@ -1,0 +1,31 @@
+.unitCard {
+  @apply p-[6px] border border-[#D5D7DA] rounded-lg w-[400px] h-full max-h-[355px];
+}
+
+.unitCardImage {
+  @apply relative w-full h-[209px] rounded-lg overflow-hidden bg-[#F5F5F5];
+}
+
+.unitCardInfo {
+  @apply mt-4 text-left px-6;
+}
+
+.unitCardInfo h3 {
+  @apply text-[18px] leading-[22px] font-semibold text-[#181D27];
+}
+
+.unitDetails {
+  @apply flex items-center gap-[10px];
+}
+
+.unitDetailsPrice {
+  @apply text-[#416DC6] text-[18px] leading-[22px] font-semibold;
+}
+
+.pricePerM2 {
+  @apply text-sm leading-5 font-medium text-[#717680];
+}
+
+.unitCardButton {
+  @apply px-4 h-[40px] bg-[#416DC6] rounded-lg text-white text-sm leading-5 font-semibold w-[356px] mt-4;
+}

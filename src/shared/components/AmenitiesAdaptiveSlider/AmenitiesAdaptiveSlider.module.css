@@ -1,0 +1,15 @@
+.swiper {
+  @apply mt-8 md:hidden;
+}
+
+.itemImage {
+  @apply relative w-[74.67vw] h-[41.6vw] rounded-lg overflow-hidden;
+}
+
+.image {
+  @apply object-cover;
+}
+
+.description {
+  @apply mt-1 text-sm leading-5 font-semibold;
+}

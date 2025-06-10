@@ -1,0 +1,23 @@
+.personalBroker {
+  @apply p-4 border border-[#E9EAEB] rounded-lg;
+}
+
+.brokerInfoContainer {
+  @apply flex items-center gap-2;
+}
+
+.brokerImage {
+  @apply size-[58px] relative;
+}
+
+.brokerName {
+  @apply text-sm leading-5 font-medium text-[#717680];
+}
+
+.brokerPhone {
+  @apply text-[#181D27] text-xl leading-[28px] font-semibold;
+}
+
+.chatButton {
+  @apply bg-white border border-[#D5D7DA] text-base leading-6 text-[#414651] rounded-lg h-12 w-full mt-4;
+}

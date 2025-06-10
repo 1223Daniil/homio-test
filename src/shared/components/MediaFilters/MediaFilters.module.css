@@ -1,0 +1,23 @@
+.mediaFilters {
+  @apply flex items-center justify-center w-full;
+}
+
+.mediaFiltersContainer {
+  @apply w-fit gap-2 !hidden md:!flex;
+}
+
+.mediaFiltersItem {
+  @apply h-9 px-[14px] rounded-lg border border-[#D5D7DA] flex items-center justify-center gap-2 text-[#0b0e17] text-sm leading-5 font-semibold;
+}
+
+.mediaFiltersItemActive {
+  @apply bg-[#3062B8] border-[#F5F8FF];
+}
+
+.mediaFiltersItem svg {
+  @apply size-5;
+}
+
+.mediaFiltersSwiper {
+  @apply md:!hidden !pl-[22px];
+}

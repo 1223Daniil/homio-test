@@ -1,0 +1,149 @@
+/* AI Project Card Styles */
+
+.ai-project-card {
+    @apply bg-white rounded-lg shadow-sm overflow-hidden;
+}
+
+.ai-project-card:hover {
+    @apply shadow-md;
+}
+
+.ai-project-card-image {
+    @apply relative w-[200px] h-[200px];
+}
+
+.ai-project-card-image img {
+    @apply w-full h-full object-cover;
+}
+
+.ai-project-card-content {
+    @apply py-4 pr-4;
+}
+
+.ai-project-card-title {
+    @apply text-xl font-semibold;
+}
+
+.ai-project-card-status {
+    @apply text-sm px-3 py-1 rounded-full;
+}
+
+.ai-project-card-status.active {
+    @apply bg-success-50 text-success-500;
+}
+
+.ai-project-card-info {
+    @apply flex items-center gap-2 text-default-500;
+}
+
+.ai-project-card-info-icon {
+    @apply w-4 h-4 shrink-0;
+}
+
+.ai-project-card-info-text {
+    @apply text-sm;
+}
+
+.ai-project-card-beach {
+    @apply flex items-center gap-1 text-sm;
+}
+
+.ai-project-card-link {
+    @apply text-primary hover: text-primary-600 text-sm font-medium flex items-center gap-1 group;
+}
+
+.ai-project-card-link-arrow {
+    @apply transform transition-transform group-hover: translate-x-1;
+}
+
+
+/* Loading States */
+
+.ai-project-card-skeleton {
+    @apply animate-pulse;
+}
+
+.ai-project-card-skeleton-image {
+    @apply bg-default-200 h-[200px];
+}
+
+.ai-project-card-skeleton-content {
+    @apply py-4 pr-4 space-y-3;
+}
+
+.ai-project-card-skeleton-title {
+    @apply h-6 bg-default-200 rounded w-3/4;
+}
+
+.ai-project-card-skeleton-text {
+    @apply h-4 bg-default-200 rounded;
+}
+
+
+/* Animations */
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ai-project-card-enter {
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.ai-project-card-match {
+    background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
+    color: white;
+    font-weight: 600;
+}
+
+.ai-project-card-badge {
+    @apply absolute top-2 right-2 px-2 py-1 text-xs font-medium rounded-full;
+    background: rgba(var(--primary-rgb), 0.9);
+    backdrop-filter: blur(4px);
+}
+
+.ai-project-card-location {
+    @apply flex items-center gap-2 text-gray-600 text-sm mb-3;
+}
+
+.ai-project-card-why-suitable {
+    background: rgba(var(--primary-rgb), 0.05);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.ai-project-card-why-suitable h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.ai-project-card-features {
+    @apply flex flex-wrap gap-2 mt-3;
+}
+
+.ai-project-card-feature {
+    @apply text-xs px-2 py-1 rounded-full bg-primary-50 text-primary-600;
+}
+
+.ai-project-card-amenities {
+    @apply flex flex-wrap gap-2 mt-3;
+}
+
+.ai-project-card-amenity {
+    @apply text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 flex items-center gap-1;
+}
+
+.ai-project-card-footer {
+    @apply mt-auto pt-4 flex items-center justify-between;
+}

@@ -1,0 +1,82 @@
+# Next Homio Project Structure
+
+## Core Technologies
+------------------
+- Next.js 14 with App Router
+- TypeScript for type safety
+- Prisma ORM with PostgreSQL
+- NextUI (replacing Mantine UI v6)
+- next-intl for internationalization
+- Docker for development
+
+## Directory Structure
+--------------------
+/src
+  /app                      # Next.js App Router
+    /[locale]              # Internationalized routes
+      /dashboard           # Dashboard pages
+      /projects           # Project management
+        /[id]             # Project details pages
+          /edit           # Project editing page
+          /units          # Units management
+      /courses            # Course management (new) 
+      /page.tsx           # Home page
+    /api                  # API routes
+      /projects          # Project-related endpoints
+      /courses           # Course-related endpoints (new)
+      /media            # Media handling endpoints
+  /components             # React components
+    /admin               # Admin components (new)
+    /layout              # Layout components
+    /projects           # Project components
+    /courses            # Course components (new)
+    /common             # Shared components
+    /infrastructure     # Infrastructure components (new)
+    /ui                 # UI components
+  /hooks                 # Custom React hooks
+  /lib                   # Core utilities
+    /prisma.ts          # Prisma client
+    /validation.ts      # Validation utilities
+    /utils.ts           # Utility functions
+  /locales              # Translation files
+    /en.json           # English translations
+    /ru.json           # Russian translations
+  /types                # TypeScript definitions
+    /project.ts        # Project types
+    /course.ts         # Course types (new)
+
+// ... existing Data Models section ...
+
+## New Features
+-------------
+1. Course Management (new)
+   - Course creation and editing
+   - Lesson management
+   - Progress tracking
+   - Educational content
+
+2. Marketing Assets (new)
+   - Asset management
+   - Marketing materials
+   - Project descriptions
+   - Media galleries
+
+3. Construction Progress (new)
+   - Progress tracking
+   - Construction updates
+   - Photo documentation
+   - Timeline management
+
+## Component Updates
+------------------
+1. Form Components
+   - MarketingAssetsForm (new)
+   - ImportProjects (new)
+   - ProjectEditForm (updated)
+
+2. Infrastructure Components (new)
+   - InfrastructureMap
+   - LocationSelector
+   - DistanceIndicator
+
+// ... rest of the existing structure remains the same ... 

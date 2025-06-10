@@ -1,0 +1,96 @@
+.horItem,
+.quadroGridItemImage,
+.verItem,
+.doubleGridItemImage {
+  @apply rounded-lg overflow-clip relative;
+}
+
+.image {
+  @apply object-cover hover:brightness-75 transition-all duration-300;
+}
+
+.imageLoading,
+.videoLoading {
+  @apply opacity-0;
+}
+
+.imageLoader {
+  @apply absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 z-10;
+}
+
+.spinner {
+  @apply w-8 h-8 border-4 border-gray-300 dark:border-gray-600 border-t-primary rounded-full animate-spin;
+}
+
+.gridPattern {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.col {
+  @apply flex flex-col gap-4;
+}
+
+.quadroGridItem {
+  @apply grid grid-cols-2 grid-rows-2 gap-4;
+}
+
+.colInner {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.doubleGridItem {
+  @apply grid grid-rows-2 gap-4;
+}
+
+.horItem {
+  @apply w-full h-[254.77px];
+}
+
+.quadroGridItemImage {
+  @apply w-full h-[254.77px];
+}
+
+.verItem {
+  @apply w-full h-[525.54px];
+}
+
+.doubleGridItemImage {
+  @apply w-full h-[254.77px];
+}
+
+.video {
+  @apply object-cover relative w-full h-full;
+}
+
+.videoPlayerWrapper {
+  @apply absolute inset-0 w-full h-full;
+}
+
+.videoContainer {
+  @apply relative hover:brightness-75 transition-all duration-300;
+}
+
+.videoOverlay {
+  @apply absolute inset-0 flex items-center justify-center z-10 pointer-events-none;
+}
+
+.playButton svg {
+  @apply text-white size-12 drop-shadow-md;
+}
+
+.avifContainer {
+  @apply relative w-full h-full;
+}
+
+.avifImage {
+  @apply absolute inset-0 w-full h-full object-cover hover:brightness-75 transition-all duration-300 rounded-lg;
+}
+
+.unknownFileType {
+  @apply flex items-center justify-center h-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-sm;
+}
+
+.imageError,
+.videoError {
+  @apply absolute inset-0 flex items-center justify-center bg-gray-100/80 dark:bg-gray-800/80 text-red-500 text-sm font-medium z-20 text-center px-2;
+}

@@ -1,0 +1,11 @@
+.sliderPagination {
+  @apply w-fit flex gap-[6px] items-center p-1 rounded-xl bg-white;
+}
+
+.dot {
+  @apply size-2 bg-[#D5D7DA] rounded-full;
+}
+
+.dotActive {
+  @apply bg-[#181D27];
+}

@@ -1,0 +1,29 @@
+.bottomBarContainer {
+  @apply px-4;
+  @apply absolute bottom-0 left-0 w-full 2xl:px-8 z-10;
+}
+
+.bottomBar {
+  @apply py-4 px-4;
+  @apply w-full h-fit bg-white rounded-t-lg flex 2xl:py-6 2xl:px-8 justify-between;
+}
+
+.col:not(:last-child) {
+  @apply pr-[2.5rem];
+  @apply 2xl:pr-[30.5px] border-r border-[#E9EAEB];
+}
+
+.col h4 {
+  @apply flex flex-col gap-1;
+  @apply 2xl:gap-[2px];
+}
+
+.colTitle {
+  @apply text-sm leading-5;
+  @apply 2xl:text-sm 2xl:leading-5 text-[#717680] font-medium;
+}
+
+.colValue {
+  @apply text-lg;
+  @apply 2xl:text-xl 2xl:leading-[28px] text-[#181D27] font-semibold;
+}

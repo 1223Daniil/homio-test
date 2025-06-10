@@ -1,0 +1,11 @@
+.slider {
+  @apply w-full h-[74.67vw] md:hidden;
+}
+
+.slide {
+  @apply w-full h-[74.67vw] relative rounded-lg overflow-hidden;
+}
+
+.image {
+  @apply object-cover;
+}

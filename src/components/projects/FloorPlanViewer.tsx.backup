@@ -1,0 +1,577 @@
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  Button,
+  Card,
+  CardBody,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Select,
+  SelectItem
+} from "@heroui/react";
+import {
+  IconArrowRight,
+  IconChevronDown,
+  IconMaximize,
+  IconX
+} from "@tabler/icons-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import Link from "next/link";
+import { UnitDetails } from "./UnitDetails";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useTranslations } from "next-intl";
+
+interface Unit {
+  id: string;
+  number: string;
+  status: string;
+  floor: number;
+  bedrooms?: number;
+  price?: number;
+  area?: number;
+  windowView?: "sea" | "mountain" | "city" | "garden";
+}
+
+// Добавим интерфейс для SVG области
+interface SvgArea {
+  unitId: string;
+  svgPath: string;
+}
+
+interface FloorPlan {
+  id: string;
+  buildingId: string;
+  floorNumber: number;
+  imageUrl: string;
+  name: string;
+  status: string;
+  svgData?: string;
+  units?: Unit[];
+  areas?: SvgArea[]; // Теперь используем строгий тип
+}
+
+interface FloorPlanViewerProps {
+  floorPlans: FloorPlan[];
+  selectedFloor: number;
+  onFloorChange: (floor: number) => void;
+}
+
+export function FloorPlanViewer({
+  floorPlans,
+  selectedFloor,
+  onFloorChange
+}: FloorPlanViewerProps) {
+  const t = useTranslations("Units");
+  const t2 = useTranslations("ProjectDetails");
+  const [hoveredUnit, setHoveredUnit] = useState<Unit | null>(null);
+  const [pinnedUnit, setPinnedUnit] = useState<Unit | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  // Отслеживаем, находится ли мышь над каким-либо сектором
+  const [isMouseOverAnyPath, setIsMouseOverAnyPath] = useState(false);
+
+  const selectedPlan = floorPlans.find(
+    plan => plan.floorNumber === selectedFloor
+  );
+  const svgData = selectedPlan?.svgData ? JSON.parse(selectedPlan.svgData) : [];
+  const sortedFloors = [...floorPlans].sort(
+    (a, b) => b.floorNumber - a.floorNumber
+  );
+
+  const calculateTooltipPosition = useCallback(() => {
+    if (!containerRef.current) return;
+
+    const container = containerRef.current.getBoundingClientRect();
+    const tooltip = tooltipRef.current?.getBoundingClientRect();
+    const viewport = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+
+    let x = mousePosition.x;
+    let y = mousePosition.y;
+
+    // Если тултип еще не отрисован, используем примерные размеры
+    const tooltipWidth = tooltip?.width || 300;
+    const tooltipHeight = tooltip?.height || 150;
+
+    // Check if tooltip would go outside the viewport on the right
+    if (container.left + x + tooltipWidth > viewport.width) {
+      x = x - tooltipWidth - 40;
+    }
+
+    // Check if tooltip would go outside the viewport on the bottom
+    if (container.top + y + tooltipHeight > viewport.height) {
+      y = y - tooltipHeight - 20;
+    }
+
+    // Ensure tooltip doesn't go outside the viewport on the left
+    if (container.left + x < 0) {
+      x = -container.left + 20;
+    }
+
+    // Ensure tooltip doesn't go outside the viewport on the top
+    if (container.top + y < 0) {
+      y = -container.top + 20;
+    }
+
+    setTooltipPosition({ x, y });
+  }, [mousePosition]);
+
+  // Вызываем calculateTooltipPosition только когда изменяется mousePosition
+  // или когда компонент монтируется
+  useEffect(() => {
+    calculateTooltipPosition();
+  }, [mousePosition, calculateTooltipPosition]);
+
+  // Отдельный эффект для обновления позиции при изменении hoveredUnit
+  useEffect(() => {
+    if (hoveredUnit) {
+      calculateTooltipPosition();
+    }
+  }, [hoveredUnit, calculateTooltipPosition]);
+
+  // Оптимизированный обработчик движения мыши
+  const handleMouseMove = useCallback((e: React.MouseEvent<SVGElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Обновляем позицию мыши сразу, без оптимизации
+    setMousePosition({ x, y });
+  }, []);
+
+  const handleUnitClick = useCallback(
+    (unit: Unit | undefined, e: React.MouseEvent) => {
+      if (!unit) return;
+      e.stopPropagation();
+      setPinnedUnit({
+        ...unit,
+        floor: selectedPlan?.floorNumber || 1
+      });
+
+      setTimeout(() => {
+        const detailsSection = document.getElementById("unit-details");
+        if (detailsSection) {
+          detailsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    },
+    [selectedPlan?.floorNumber]
+  );
+
+  const handleOpenModal = useCallback((e: React.MouseEvent) => {
+    setModalPosition({
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2
+    });
+    setIsModalOpen(true);
+  }, []);
+
+  const getWindowViewTranslation = (view: string) => {
+    switch (view) {
+      case "sea":
+        return t("windowView.sea");
+      case "mountain":
+        return t("windowView.mountain");
+      case "city":
+        return t("windowView.city");
+      case "garden":
+        return t("windowView.garden");
+      default:
+        return view;
+    }
+  };
+
+  // Эффект для очистки hoveredUnit, если мышь не над сектором и нет закреплённого юнита
+  useEffect(() => {
+    if (!isMouseOverAnyPath && !pinnedUnit && hoveredUnit) {
+      setHoveredUnit(null);
+    }
+  }, [isMouseOverAnyPath, pinnedUnit, hoveredUnit]);
+
+  // Функции для обработки событий мыши для секторов
+  const handleUnitMouseOver = (unit: Unit | undefined) => {
+    setIsMouseOverAnyPath(true);
+    if (!pinnedUnit && unit) {
+      setHoveredUnit(unit);
+    }
+  };
+
+  const handleUnitMouseOut = () => {
+    setIsMouseOverAnyPath(false);
+  };
+
+  // Shared SVG overlay component
+  const SvgOverlay = ({ isModal = false }: { isModal?: boolean }) => (
+    <svg
+      className="absolute inset-0 w-full h-full"
+      viewBox={`0 0 ${isModal ? "1000 1000" : "100 100"}`}
+      preserveAspectRatio="none"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => {
+        // При выходе из SVG целиком гарантированно сбрасываем флаг
+        setIsMouseOverAnyPath(false);
+      }}
+      style={{ pointerEvents: "none" }}
+    >
+      <g style={{ pointerEvents: "all" }}>
+        {svgData.map((area: SvgArea, index: number) => {
+          // Находим юнит по unitId из areas
+          const unitId = area.unitId;
+          // Сначала ищем в units, если не находим, то будем использовать данные из areas
+          const unit = selectedPlan?.units?.find(u => u.id === unitId);
+
+          // Если unit не найден, но есть unitId, создаем временный объект unit
+          const effectiveUnit =
+            unit ||
+            (unitId
+              ? {
+                  id: unitId,
+                  number: `Unit ${index + 1}`,
+                  status: "UNKNOWN",
+                  floor: selectedPlan?.floorNumber || 1
+                }
+              : undefined);
+
+          const fillColor =
+            effectiveUnit?.status === "AVAILABLE"
+              ? "rgba(0, 255, 0, 0.2)"
+              : effectiveUnit?.status === "RESERVED"
+                ? "rgba(255, 165, 0, 0.2)"
+                : "rgba(255, 0, 0, 0.2)";
+
+          const isSelected =
+            pinnedUnit?.id === effectiveUnit?.id ||
+            hoveredUnit?.id === effectiveUnit?.id;
+
+          return (
+            <path
+              key={index}
+              d={area.svgPath}
+              fill={fillColor}
+              stroke={
+                isSelected
+                  ? "rgba(255, 255, 255, 0.8)"
+                  : "rgba(255, 255, 255, 0.5)"
+              }
+              strokeWidth={isSelected ? "0.4" : "0.2"}
+              className="cursor-pointer"
+              style={{
+                transform: isSelected ? "scale(1.02)" : "scale(1)",
+                transition: "transform 0.2s, filter 0.2s",
+                filter: isSelected ? "brightness(1.2)" : "brightness(1)"
+              }}
+              onClick={e => handleUnitClick(effectiveUnit, e)}
+              onMouseEnter={() => handleUnitMouseOver(effectiveUnit)}
+              onMouseLeave={handleUnitMouseOut}
+            />
+          );
+        })}
+      </g>
+    </svg>
+  );
+
+  // Unit info tooltip component
+  const UnitInfoTooltip = () => {
+    const unit = pinnedUnit || hoveredUnit;
+
+    // Вместо return null используем стиль с нулевой прозрачностью
+    // Это гарантирует, что тултип всегда существует в DOM для плавных переходов
+
+    return (
+      <div
+        ref={tooltipRef}
+        className={`absolute z-[100] bg-background dark:bg-default-100 p-4 rounded-lg shadow-lg ${
+          pinnedUnit ? "cursor-auto" : "pointer-events-none"
+        }`}
+        style={{
+          left: `${tooltipPosition.x}px`,
+          top: `${tooltipPosition.y}px`,
+          width: "300px",
+          transformOrigin: "top left",
+          transition:
+            "left 0.1s ease-out, top 0.1s ease-out, opacity 0.2s ease-out, transform 0.2s ease-out",
+          opacity: unit ? 1 : 0,
+          transform: `scale(${unit ? 1 : 0.95})`,
+          visibility: unit ? "visible" : "hidden" // Скрываем полностью после завершения анимации
+        }}
+      >
+        {unit && ( // Рендерим содержимое только если есть unit
+          <div className="space-y-2">
+            {pinnedUnit && (
+              <div className="flex justify-between items-center mb-2">
+                <div className="font-medium text-default-900">
+                  {t("title")} {unit.number}
+                </div>
+                <Button
+                  isIconOnly
+                  size="sm"
+                  variant="light"
+                  onClick={() => setPinnedUnit(null)}
+                >
+                  <IconX size={16} />
+                </Button>
+              </div>
+            )}
+            {!pinnedUnit && (
+              <div className="font-medium text-default-900">
+                {t("title")} {unit.number}
+              </div>
+            )}
+            <div className="text-sm grid grid-cols-2 gap-2">
+              <div className="text-default-700">
+                <span className="text-default-500">{t("card.area")}:</span>{" "}
+                {unit.area} m²
+              </div>
+              {unit.bedrooms && (
+                <div className="text-default-700">
+                  <span className="text-default-500">
+                    {t("card.bedrooms")}:
+                  </span>{" "}
+                  {unit.bedrooms}
+                </div>
+              )}
+              {unit.windowView && (
+                <div className="text-default-700">
+                  <span className="text-default-500">{t("card.view")}:</span>{" "}
+                  {getWindowViewTranslation(unit.windowView)}
+                </div>
+              )}
+              {unit.price && (
+                <div className="col-span-2 text-primary font-medium">
+                  {new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                  }).format(unit.price)}
+                </div>
+              )}
+            </div>
+            {pinnedUnit && selectedPlan?.buildingId && (
+              <Link
+                href={{
+                  pathname: `/projects/${selectedPlan.buildingId}/units/${unit.id}`
+                }}
+                className="flex items-center gap-2 text-primary mt-4 hover:opacity-80"
+              >
+                {t("card.view")}
+                <IconArrowRight size={20} />
+              </Link>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="relative w-full">
+      <div className="flex flex-col md:flex-row gap-4">
+        {/* Floor Selection - Desktop */}
+        {!isMobile && (
+          <div className="w-32 flex-shrink-0 bg-default-50 dark:bg-default-100 rounded-lg p-2">
+            <div className="text-sm font-medium mb-2">
+              {t2("tabs.plans.selectFloor")}
+            </div>
+            <div className="space-y-1">
+              {sortedFloors.map(plan => (
+                <motion.div
+                  key={plan.floorNumber}
+                  className={`
+                    p-2 rounded-lg cursor-pointer text-sm
+                    ${
+                      selectedFloor === plan.floorNumber
+                        ? "bg-primary text-white"
+                        : "hover:bg-default-100 dark:hover:bg-default-200"
+                    }
+                  `}
+                  onClick={() => onFloorChange(plan.floorNumber)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  layout
+                >
+                  {t2("tabs.plans.floor")} {plan.floorNumber}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Floor Selection - Mobile */}
+        {isMobile && (
+          <div className="w-full">
+            <Select
+              size="sm"
+              label={t2("tabs.plans.selectFloor")}
+              selectedKeys={[selectedFloor.toString()]}
+              onChange={e => onFloorChange(Number(e.target.value))}
+              className="w-full"
+            >
+              {sortedFloors.map(plan => (
+                <SelectItem
+                  key={plan.floorNumber.toString()}
+                  value={plan.floorNumber.toString()}
+                >
+                  {t2("tabs.plans.floor")} {plan.floorNumber}
+                </SelectItem>
+              ))}
+            </Select>
+          </div>
+        )}
+
+        {/* Floor Plan Display */}
+        <div className="flex-grow relative" ref={containerRef}>
+          {selectedPlan ? (
+            <Card className="w-full">
+              <CardBody className="p-0">
+                <div className="relative group">
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    color="default"
+                    variant="flat"
+                    className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    <IconMaximize size={20} />
+                  </Button>
+
+                  <motion.div
+                    key={selectedPlan.floorNumber}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative"
+                  >
+                    <img
+                      src={selectedPlan.imageUrl}
+                      alt={`Floor ${selectedPlan.floorNumber} plan`}
+                      className="w-full h-full object-contain"
+                    />
+                    <SvgOverlay />
+                  </motion.div>
+
+                  {/* Unit Info Tooltip - Desktop Only */}
+                  {!isMobile && !pinnedUnit && <UnitInfoTooltip />}
+                </div>
+              </CardBody>
+            </Card>
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              {t2("tabs.plans.selectFloorPrompt")}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Fullscreen Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        size="full"
+        scrollBehavior="inside"
+        classNames={{
+          wrapper: "items-center justify-center z-[200]",
+          base: "m-0 max-w-full h-full",
+          body: "p-0 relative",
+          header: "border-b border-default-200",
+          footer: "border-t border-default-200",
+          backdrop: "z-[200]"
+        }}
+      >
+        <ModalContent>
+          <ModalHeader className="flex justify-between items-center">
+            <span>
+              {t2("tabs.plans.floor")} {selectedPlan?.floorNumber}
+            </span>
+          </ModalHeader>
+          <ModalBody>
+            <div className="relative w-full h-[calc(100vh-8rem)] flex items-center justify-center bg-default-100">
+              <div className="relative w-full h-full max-w-[90vw] max-h-[80vh]">
+                <img
+                  src={selectedPlan?.imageUrl}
+                  alt={`Floor ${selectedPlan?.floorNumber} plan`}
+                  className="w-full h-full object-contain"
+                />
+                <SvgOverlay isModal />
+                {!isMobile && <UnitInfoTooltip />}
+              </div>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="danger"
+              variant="light"
+              onPress={() => setIsModalOpen(false)}
+            >
+              {t("buttons.back")}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Bottom Sheet for Mobile */}
+      {isMobile && pinnedUnit && (
+        <motion.div
+          initial={{ y: "100%" }}
+          animate={{ y: 0 }}
+          exit={{ y: "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed bottom-0 left-0 right-0 z-50 bg-default-50 dark:bg-default-100 rounded-t-xl shadow-xl"
+          style={{ maxHeight: "85vh", overflowY: "auto" }}
+        >
+          <div className="sticky top-0 flex justify-between items-center p-4 bg-default-50 dark:bg-default-100 border-b border-default-200">
+            <h3 className="text-lg font-semibold">
+              {t("title")} {pinnedUnit.number}
+            </h3>
+            <Button
+              isIconOnly
+              variant="light"
+              onClick={() => setPinnedUnit(null)}
+            >
+              <IconX size={20} />
+            </Button>
+          </div>
+          <div className="p-4">
+            <UnitDetails
+              unit={pinnedUnit}
+              planImageUrl={selectedPlan?.imageUrl || ""}
+              buildingId={selectedPlan?.buildingId || ""}
+              onClose={() => setPinnedUnit(null)}
+              isMobile={true}
+            />
+          </div>
+        </motion.div>
+      )}
+
+      {/* Desktop Unit Details */}
+      {!isMobile && pinnedUnit && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          className="mt-8"
+        >
+          <UnitDetails
+            unit={pinnedUnit}
+            planImageUrl={selectedPlan?.imageUrl || ""}
+            buildingId={selectedPlan?.buildingId || ""}
+            onClose={() => setPinnedUnit(null)}
+            isMobile={false}
+          />
+        </motion.div>
+      )}
+    </div>
+  );
+}

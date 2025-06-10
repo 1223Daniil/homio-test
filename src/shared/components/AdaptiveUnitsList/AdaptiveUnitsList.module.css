@@ -1,0 +1,47 @@
+.container {
+  @apply flex flex-col gap-4;
+}
+
+.unitItem {
+  @apply flex justify-between items-start;
+}
+
+.leftCol {
+  @apply flex gap-3;
+}
+
+.image {
+  @apply relative w-[34.13vw] h-[19.2vw];
+}
+
+.info {
+  @apply flex flex-col gap-[2px];
+}
+
+.number {
+  @apply text-2xl font-bold;
+}
+
+.date {
+  @apply text-xs leading-[18px] text-gray-500;
+}
+
+.price {
+  @apply text-base leading-6 font-medium text-gray-900;
+}
+
+.description {
+  @apply text-xs leading-[18px] text-gray-500;
+}
+
+.rightCol {
+  @apply flex flex-col justify-between items-end;
+}
+
+.number {
+  @apply text-xs leading-[18px] text-gray-500;
+}
+
+.image {
+  @apply rounded-lg object-contain;
+}

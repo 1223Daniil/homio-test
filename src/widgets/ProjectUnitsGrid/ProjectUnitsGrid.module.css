@@ -1,0 +1,108 @@
+.unitsGrid {
+  @apply flex max-h-[708px] h-full w-full overflow-hidden;
+}
+
+.floors {
+  @apply overflow-auto min-w-[104px] pr-4;
+}
+
+.floor {
+  @apply h-[104px] flex flex-col items-center justify-center pr-4;
+}
+
+.floor {
+  @apply p-3 pl-4 relative;
+}
+
+.unit::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full;
+}
+
+.available::before {
+  @apply bg-[#12B76A];
+}
+
+.reserved::before {
+  @apply bg-[#F79009];
+}
+
+.sold::before {
+  @apply bg-[#717680];
+}
+
+.unavailable::before {
+  @apply bg-[#D5D7DA];
+}
+
+.floorButton {
+  @apply w-[88px] h-[22px] flex items-center justify-center rounded-2xl bg-[#F5F5F5] text-xs leading-[18px] font-medium text-[#414651];
+}
+
+.unitsCount {
+  @apply text-[#717680] text-xs leading-[18px] font-medium text-center;
+}
+
+.units {
+  @apply flex flex-col gap-3 overflow-auto flex-1 pb-4 max-w-full;
+}
+
+.unitsRow {
+  @apply flex gap-3 bg-[#F5F5F5] rounded-lg flex-nowrap !w-fit;
+}
+
+.unitsRowActive {
+  @apply bg-[#EBF2FF];
+}
+
+.unit {
+  @apply border border-[#D5D7DA] rounded-lg relative p-3 pl-4 flex flex-col justify-between h-[104px] min-w-[180px] max-w-[180px] overflow-hidden bg-white flex-shrink-0;
+}
+
+.unitHeader {
+  @apply flex items-center justify-between;
+}
+
+.unitNumber {
+  @apply flex items-center gap-[2px] text-[#3062B8] text-sm leading-5 font-semibold;
+}
+
+.unitNumber svg {
+  @apply size-5;
+}
+
+.layoutName {
+  @apply text-sm leading-5 text-[#717680];
+}
+
+.unitPrice {
+  @apply text-sm leading-5 text-[#181D27] font-medium;
+}
+
+.unitType {
+  @apply flex justify-between items-center gap-[2px] text-[#717680] text-xs leading-[18px] font-medium;
+}
+
+.unitTypeText {
+  @apply text-sm leading-5 text-[#717680];
+}
+
+.unitType svg {
+  @apply size-5;
+}
+
+/* Стили для статусов юнитов */
+.statusAvailable::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#12B76A];
+}
+
+.statusReserved::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#FFA800];
+}
+
+.statusSold::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#717680];
+}
+
+.statusUnavailable::before {
+  @apply content-[''] absolute left-0 top-0 w-2 h-full bg-[#D5D7DA];
+}

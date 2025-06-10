@@ -1,0 +1,123 @@
+.swiper {
+  @apply w-full lg:!hidden mt-4;
+}
+
+.buildingCard {
+  @apply max-w-[280px] w-full h-[281px] bg-white border border-gray-300 rounded-lg p-3;
+}
+
+.buildingName {
+  @apply text-gray-900 text-xl leading-[28px] font-semibold;
+}
+
+.facts {
+  @apply flex justify-between items-start;
+}
+
+.factLabel {
+  @apply text-gray-500 text-sm leading-5 font-medium;
+}
+
+.factValue {
+  @apply text-gray-900 text-sm leading-5 font-medium;
+}
+
+.divider {
+  @apply w-full h-[1px] bg-gray-100 my-2;
+}
+
+.layoutsList {
+  @apply h-[124px] overflow-y-auto;
+}
+
+.layout {
+  @apply flex justify-between items-center;
+}
+
+.layoutData {
+  @apply flex items-center gap-1;
+}
+
+.layoutCount {
+  @apply size-8 bg-[#F5F8FF] text-[#416DC6] rounded-full flex items-center justify-center;
+}
+
+.layoutType {
+  @apply text-sm leading-5 font-medium;
+}
+
+.layoutTitle {
+  @apply text-gray-900;
+}
+
+.layoutPrice {
+  @apply text-gray-500;
+}
+
+.arrow {
+  @apply size-5 text-gray-600;
+}
+
+.showUnitsButton {
+  @apply w-full h-[40px] bg-[#3062B8] text-white rounded-lg flex items-center justify-center;
+}
+
+.layoutsModal {
+  @apply fixed inset-0 bg-white w-[100vw] h-[100dvh] px-4 py-[18px] z-50 overflow-y-auto pb-8;
+}
+
+.layoutsModalContent {
+  @apply w-full h-fit;
+}
+
+.layoutsModalHeader {
+  @apply flex justify-between items-center py-3;
+}
+
+.layoutsModalClose {
+  @apply size-9 flex items-center justify-center;
+}
+
+.layoutsModalClose svg {
+  @apply size-5 text-gray-700;
+}
+
+.layoutsModalTitle {
+  @apply text-base leading-6 font-semibold text-gray-900;
+}
+
+.underHeader {
+  @apply pt-[15px] sticky -top-[18px] bg-white z-50 pb-3;
+}
+
+.select select {
+  @apply w-full bg-white border border-gray-300 rounded-lg text-base leading-6 font-medium text-gray-900;
+}
+
+.switchers {
+  @apply mt-5 items-center border border-gray-500 rounded-lg grid grid-cols-3 overflow-hidden max-w-[132px];
+}
+
+.switcher {
+  @apply w-[44px] h-[40px] bg-transparent flex items-center justify-center bg-white transition-all duration-300;
+}
+
+.switcher svg {
+  @apply size-5 text-gray-500 transition-all duration-300;
+}
+
+.switcherActive {
+  @apply bg-gray-500;
+}
+
+.switcherActive svg {
+  @apply text-white;
+}
+
+.unitsCount {
+  @apply mt-5 text-sm leading-5 font-semibold text-gray-900;
+}
+
+.content {
+  @apply mt-3 flex flex-col;
+}
